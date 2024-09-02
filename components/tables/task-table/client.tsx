@@ -5,14 +5,13 @@ import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
-
 import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { columns } from './columns';
 import { DeliveryManagement, DeliveryManagementData } from '@/constants/delivery-management-data';
 import { CalendarDateRangePicker } from '@/components/date-range-picker';
 
-export const DeliveryClient: React.FC = () => {
+export const TaskClient: React.FC = () => {
   const router = useRouter();
   const initialData: DeliveryManagement[] = DeliveryManagementData;
   const [data, setData] = useState<DeliveryManagement[]>(initialData);
@@ -39,15 +38,15 @@ export const DeliveryClient: React.FC = () => {
     <>
       <div className="flex items-start justify-between">
         <Heading
-          title={`Delivery (${data.length})`}
-          description="Manage Delivery (Client side table functionalities.)"
+          title={`Task Management (${data.length})`}
+          description="Manage Task (Client side table functionalities.)"
         />
-        {/* <Button
+        <Button
           className="text-xs md:text-sm"
           onClick={() => router.push(`/order`)}
         >
           <Plus className="mr-2 h-4 w-4" /> Add New
-        </Button> */}
+        </Button>
       </div>
       <Separator />
       

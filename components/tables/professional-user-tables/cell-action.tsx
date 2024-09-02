@@ -63,16 +63,16 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
          
           <DropdownMenuItem onClick={handleEditUser}>
-            <Edit className="mr-2 h-4 w-4" /> Edit Customer Details
+            <Edit className="mr-2 h-4 w-4" /> Edit User Details
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleViewUser}>
-            <Eye className="mr-2 h-4 w-4" /> View Customer
+            <Eye className="mr-2 h-4 w-4" /> View User
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleAssignEmployee}>
+          {/* <DropdownMenuItem onClick={handleAssignEmployee}>
             <UserCheck className="mr-2 h-4 w-4" /> Assign Employee
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
           <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" /> Deactivate Customer
+            <Trash className="mr-2 h-4 w-4" /> Deactivate User
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

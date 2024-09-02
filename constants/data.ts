@@ -144,12 +144,7 @@ export const navItems: NavItem[] = [
     }
   ]
   },
-  // {
-  //   title: 'Bag Management',
-  //   href: '/bag',
-  //   icon: 'order',
-  //   label: 'create-order'
-  // },
+ 
   // {
   //   title: 'Subscription',
   //   href: '/subscriptions',
@@ -162,7 +157,12 @@ export const navItems: NavItem[] = [
     icon: 'user',
     label: 'admin'
   },
-  
+  {
+    title: 'Task Management',
+    href: '/task-management',
+    icon: 'task',
+    label: 'task-management'
+  },
   // {
   //   title: 'Customer Management',
   //   href: '/user-management',

@@ -38,8 +38,15 @@ export const columns: ColumnDef<AdminManagement>[] = [
     enableHiding: false
   },
   {
-    accessorKey: 'sno', 
-    header: 'Admin ID', 
+    accessorKey: 'adminID', 
+    header: 'Admin ID',
+    cell: ({ row }) => (
+      <div className="flex justify-center">
+        <span className="text-red-600 font-bold px-1" style={{ borderRadius: '50%' }}>
+          {row.original.sno} 
+        </span>
+      </div>
+    ),
   },
   {
     accessorKey: 'fullName', 

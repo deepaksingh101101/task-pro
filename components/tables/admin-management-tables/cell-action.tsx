@@ -9,13 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { EmployeeManagement } from '@/constants/admin-management-data';
+import { AdminManagement } from '@/constants/admin-management-data';
 import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: EmployeeManagement;
+  data: AdminManagement;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -65,20 +65,20 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem> */}
       
           <DropdownMenuItem onClick={viewEmployeePerformance}>
-            <Eye className="mr-2 h-4 w-4" /> View Employee Performance 
+            <Eye className="mr-2 h-4 w-4" /> View Admin Performance 
           </DropdownMenuItem>
           <DropdownMenuItem onClick={editEmployeeDetails}>
-            <UserCheck className="mr-2 h-4 w-4" /> Edit Employee Details
+            <UserCheck className="mr-2 h-4 w-4" /> Edit Admin Details
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={assignUserToEmployee}>
+          {/* <DropdownMenuItem onClick={assignUserToEmployee}>
             <UserCheck className="mr-2 h-4 w-4" /> Assign Customer To Employee
           </DropdownMenuItem>
           <DropdownMenuItem onClick={assignUserToEmployee}>
             <UserCheck className="mr-2 h-4 w-4" /> Edit Permissions
           </DropdownMenuItem>
-          
+           */}
           <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" /> Delete Employee
+            <Trash className="mr-2 h-4 w-4" /> Delete Admin
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

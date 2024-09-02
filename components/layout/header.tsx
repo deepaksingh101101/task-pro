@@ -8,7 +8,7 @@ import { UserNav } from './user-nav';
 import Link from 'next/link';
 import { useAuthContext } from '@/provider/auth.provider';
 import { IAuthContext } from '@/types';
-import logo from '@/public/assets/Task-A-Pro Logo-A9.png';
+import logo from '@/public/assets/Task-A-Pro Logo-A9..png';
 
 const Header = () => {
   const { user } = useAuthContext() as IAuthContext;
@@ -17,7 +17,7 @@ const Header = () => {
       <nav className="flex h-14 items-center justify-between px-4">
         <div className="d-flex hidden lg:block">
           <Link href={''}>
-            <Image src={logo} alt="Task-a-pro Logo" width={50} height={10} style= {{filter: 'invert(-1)'}}/>
+            <Image src={logo} alt="Task-a-pro Logo" width={250} height={100} style= {{filter: 'invert(-1)'}}/>
           </Link>
         </div>
         <div className={cn('block lg:!hidden')}>
