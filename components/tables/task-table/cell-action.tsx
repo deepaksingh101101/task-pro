@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { TaskManagement } from '@/constants/task-management-data';
-import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck } from 'lucide-react';
+import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck, Table } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -27,30 +27,27 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     // Your confirm logic here
   };
 
-  const taskStatus = () => {
+  const editTask = () => {
     router.push(`/subscription-management/edit/${data.taskId}`); 
   };
 
-  const handleViewAndManageOrder = () => {
+  const viewTask = () => {
     router.push(`/subscription-management/view/${data.taskId}`); 
   };
 
-  const viewOrderDetals = () => {
+  const updateStatus = () => {
     router.push(`/order/${data.taskId}`); 
   };
 
-  const hanldeResheduleAndSkips = () => {
+  const viewBids= () => {
     router.push(`/subscription-management/toggleDeliveryDays/${data.taskId}`); 
   };
 
-  const generatePackingList = () => {
+  const biddingTable = () => {
     router.push(`/subscription-management/manageCustomizationOption/${data.taskId}`); 
   };
 
-  const assignDeliveryRoutes = () => {
-    router.push(`/order/assignOrder`); 
-  };
-
+ 
   return (
     <>
       <AlertModal
@@ -68,23 +65,23 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem onClick={taskStatus}>
+          <DropdownMenuItem onClick={editTask}>
             <Edit className="mr-2 h-4 w-4" />  Edit task
 
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={viewOrderDetals}>
+          <DropdownMenuItem onClick={viewTask}>
             <Eye className="mr-2 h-4 w-4" /> View Task
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={hanldeResheduleAndSkips}>
+          <DropdownMenuItem onClick={updateStatus}>
             <UserCheck className="mr-2 h-4 w-4" /> Change Status
 
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={assignDeliveryRoutes}>
-            <UserCheck className="mr-2 h-4 w-4" /> View Bids
+          <DropdownMenuItem onClick={viewBids}>
+            <Eye className="mr-2 h-4 w-4" /> View Bids
 
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={assignDeliveryRoutes}>
-            <UserCheck className="mr-2 h-4 w-4" /> Biding Table
+          <DropdownMenuItem onClick={biddingTable}>
+            <Table className="mr-2 h-4 w-4" /> Biding Table
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

@@ -26,13 +26,13 @@ export const TaskClient: React.FC = () => {
 
   const filters = [
     {
-      label: 'Task Status',
-      subOptions: ['Approved', 'Pending'],
+      label: 'Task Type',
+      subOptions: ['survey', 'inspection'  ],
     },
-    {
-      label: 'Delivery Status',
-      subOptions: ['Pending', 'Delivered', 'Cancelled'],
-    },
+    // {
+    //   label: 'Delivery Status',
+    //   subOptions: ['Pending', 'Delivered', 'Cancelled'],
+    // },
   ];
 
   return (

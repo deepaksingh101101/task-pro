@@ -141,7 +141,7 @@ export function DashboardNav({
                             <Link
                               href={subItem.href}
                               className={cn(
-                                'flex items-center gap-2 overflow-hidden rounded-md py-2 text-sm font-medium hover:bg-[#ee7d32] hover:text-white',
+                                'flex items-center gap-4  overflow-hidden rounded-md py-2 text-sm font-medium hover:bg-[#ee7d32] hover:text-white',
                                 path === subItem.href ? 'bg-accent' : 'transparent',
                                 ' ',
                                 isSubActive ? 'bg-[#ee7d32]' : ''

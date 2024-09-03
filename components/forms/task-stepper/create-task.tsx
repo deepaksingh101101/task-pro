@@ -1,17 +1,15 @@
 'use client';
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Heading } from '@/components/ui/heading';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Trash, CalendarIcon, Edit } from 'lucide-react';
+import { CalendarIcon, Trash } from 'lucide-react';
 import { useParams, useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import { cn } from '@/lib/utils';
 import { Textarea } from '@/components/ui/textarea';
@@ -19,7 +17,6 @@ import ReactSelect from 'react-select';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 interface TaskManagementFormType {
   initialData: any | null;
@@ -48,6 +45,14 @@ const taskFormSchema = z.object({
   city: z.string().optional(),
   pincode: z.string().optional(),
   country: z.string().optional(),
+  state: z.string().optional(),
+  tag: z.enum(['Urban', 'Rural']).optional(),
+  ageRange:  z.enum(['18-25', '26-35', '36-50', '50+']).optional(), 
+  gender:  z.enum(['Male', 'Female', 'Other']).optional(),
+  nationality: z.array(z.string()).optional(),
+  language: z.string().optional(),
+  taskCompletionHistory: z.string().optional(),
+  taskRatings: z.string().optional(),
 });
 
 export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) => {
@@ -81,10 +86,21 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
       city: '',
       pincode: '',
       country: '',
+      state: '',
+      tag: undefined,
+      nationality: '', 
+      ageRange: '',
+      language : '', 
+      gender: '',
+      occupation: '',
+      educationLevel:'',
+      value: undefined,
+      taskCompletionHistory: '',
+      taskRatings: ''
     }
   });
 
-  const { control, watch, handleSubmit, setValue, formState: { errors } } = form;
+  const { control, handleSubmit, setValue, formState: { errors } } = form;
 
   const onSubmit: SubmitHandler<typeof taskFormSchema._type> = async (data) => {
     try {
@@ -120,8 +136,10 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
       <Separator />
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-8">
-          <div className="w-full gap-8 md:grid md:grid-cols-3">
-            <>
+          {/* Task Details Section */}
+          <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
+            <h2 className="text-xl font-semibold  bg-gray-100">Task Details</h2>
+            <div className="w-full gap-8 md:grid md:grid-cols-3">
               <Controller
                 control={form.control}
                 name="taskId"
@@ -367,23 +385,49 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Subtasks</FormLabel>
                     <FormControl>
-                      <ReactSelect
+                      <Textarea
                         {...field}
-                        isMulti
-                        options={[{ label: 'Subtask 1', value: 'subtask1' }, { label: 'Subtask 2', value: 'subtask2' }]}
-                        isDisabled={loading}
-                        onChange={(newValue) => {
-                          const value = newValue.map(item => item.value);
-                          field.onChange(value);
-                        }}
-                        value={field.value.map((item: string) => ({ label: item, value: item }))}
+                        placeholder="Enter subtasks, separated by commas"
+                        disabled={loading}
                       />
                     </FormControl>
                     <FormMessage>{errors.subtasks?.message}</FormMessage>
                   </FormItem>
                 )}
               />
+               <Controller
+                control={form.control}
+                name="taskCompletionHistory"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Task Completion History</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={loading} />
+                    </FormControl>
+                    <FormMessage>{errors.taskType?.message}</FormMessage>
+                  </FormItem>
+                )}
+/>
+                <Controller
+                 control={form.control}
+                    name="taskRatings"
+                  render={({ field }) => (
+                <FormItem>
+                 <FormLabel>Task Ratings</FormLabel>
+             <FormControl>
+                <Input {...field} disabled={loading} />
+                </FormControl>
+             <FormMessage>{errors.taskType?.message}</FormMessage>
+    </FormItem>
+  )}
+/>
+            </div>
+          </div>
 
+          {/* Address Details Section */}
+          <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
+            <h2 className="text-xl font-semibold  bg-gray-100">Geographic Criteria</h2>
+            <div className="w-full gap-8 md:grid md:grid-cols-2">
               <Controller
                 control={form.control}
                 name="address"
@@ -403,11 +447,25 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                 name="city"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>City</FormLabel>
+                    <FormLabel>City/Town</FormLabel>
                     <FormControl>
                       <Input {...field} disabled={loading} />
                     </FormControl>
                     <FormMessage>{errors.city?.message}</FormMessage>
+                  </FormItem>
+                )}
+              />
+
+              <Controller
+                control={form.control}
+                name="state"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>State</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={loading} />
+                    </FormControl>
+                    <FormMessage>{errors.state?.message}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -439,16 +497,178 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   </FormItem>
                 )}
               />
-            </>
+
+              <Controller
+                control={form.control}
+                name="tag"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tag</FormLabel>
+                    <FormControl>
+                      <ReactSelect
+                        {...field}
+                        options={[
+                          { value: 'Urban', label: 'Urban' },
+                          { value: 'Rural', label: 'Rural' }
+                        ]}
+                        isDisabled={loading}
+                      />
+                    </FormControl>
+                    {/* <FormMessage>{errors.tag?.message}</FormMessage> */}
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
-          <Button
-            disabled={loading}
-            type="submit"
-            className="w-full"
-            onClick={() => form.handleSubmit(onSubmit)()}
-          >
-            {action}
-          </Button>
+          <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
+          <h2 className="text-xl font-semibold bg-gray-100">Demographic Criteria</h2>
+  <div className="w-full gap-8 md:grid md:grid-cols-2">
+    <Controller
+      control={form.control}
+      name="ageRange"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Age Range</FormLabel>
+          <FormControl>
+            <ReactSelect
+              {...field}
+              options={[
+                { value: '18-25', label: '18-25' },
+                { value: '26-35', label: '26-35' },
+                { value: '36-50', label: '36-50' },
+                { value: '50+', label: '50+' }
+              ]}
+              isDisabled={loading}
+            />
+          </FormControl>
+          <FormMessage>{errors.ageRange?.message}</FormMessage>
+        </FormItem>
+      )}
+    />
+    <Controller
+      control={form.control}
+      name="gender"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Gender</FormLabel>
+          <FormControl>
+            <ReactSelect
+              {...field}
+              options={[
+                { value: 'Male', label: 'Male' },
+                { value: 'Female', label: 'Female' },
+                { value: 'Other', label: 'Other' }
+              ]}
+              isDisabled={loading}
+            />
+          </FormControl>
+          <FormMessage>{errors.gender?.message}</FormMessage>
+        </FormItem>
+      )}
+    />
+    <Controller
+      control={form.control}
+      name="nationality"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Nationality</FormLabel>
+          <FormControl>
+            <ReactSelect
+              {...field}
+              options={[
+                { value: 'indian', label: 'Indian' },
+                { value: 'american', label: 'American' },
+                { value: 'british', label: 'British' },
+                // Add more nationalities as needed
+              ]}
+              isDisabled={loading}
+              isMulti
+            />
+          </FormControl>
+          <FormMessage>{errors.nationality?.message}</FormMessage>
+        </FormItem>
+      )}
+    />
+    <Controller
+      control={form.control}
+      name="language"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Language</FormLabel>
+          <FormControl>
+            <ReactSelect
+              {...field}
+              options={[
+                { value: 'english', label: 'English' },
+                { value: 'hindi', label: 'Hindi' },
+                { value: 'spanish', label: 'Spanish' },
+                // Add more languages as needed
+              ]}
+              isDisabled={loading}
+              isMulti
+            />
+          </FormControl>
+          <FormMessage>{errors.language?.message}</FormMessage>
+        </FormItem>
+      )}
+    />
+    <Controller
+      control={form.control}
+      name="occupation"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Occupation</FormLabel>
+          <FormControl>
+            <ReactSelect
+              {...field}
+              options={[
+                { value: 'engineer', label: 'Engineer' },
+                { value: 'doctor', label: 'Doctor' },
+                { value: 'teacher', label: 'Teacher' },
+                // Add more occupations as needed
+              ]}
+              isDisabled={loading}
+              isMulti
+            />
+          </FormControl>
+          <FormMessage>{errors.occupation?.message}</FormMessage>
+        </FormItem>
+      )}
+    />
+    <Controller
+      control={form.control}
+      name="educationLevel"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Education Level</FormLabel>
+          <FormControl>
+            <ReactSelect
+              {...field}
+              options={[
+                { value: 'high_school', label: 'High School' },
+                { value: 'bachelors', label: "Bachelor's Degree" },
+                { value: 'masters', label: "Master's Degree" },
+                { value: 'phd', label: 'PhD' }
+              ]}
+              isDisabled={loading}
+            />
+          </FormControl>
+          <FormMessage>{errors.educationLevel?.message}</FormMessage>
+        </FormItem>
+      )}
+    />
+  </div>
+</div>
+          {/* Form Actions */}
+          <div className="flex justify-end">
+            <Button
+              type="submit"
+              disabled={loading}
+              className="ml-4 w-full"
+            >
+              {action}
+            </Button>
+          </div>
         </form>
       </Form>
     </>

@@ -292,37 +292,37 @@ export const navItems: NavItem[] = [
   //     }
   //   ]
   // },
-  // {
-  //   title: 'Settings',
-  //   href: '/settings-management',
-  //   icon: 'settings',
-  //   label: 'settings',
-  //   subItems: [
-  //     {
-  //       title: 'General Settings',
-  //       href: '/settings-management/general',
-  //       icon: 'general',
-  //       label: 'general-settings'
-  //     },
-  //     {
-  //       title: 'Payment Settings',
-  //       href: '/settings-management/payment',
-  //       icon: 'paymentSetting',
-  //       label: 'payment-settings'
-  //     },
-  //     {
-  //       title: 'Notification Settings',
-  //       href: '/settings-management/notifications',
-  //       icon: 'notificationSetting',
-  //       label: 'notification-settings'
-  //     },
+  {
+    title: 'Settings',
+    href: '/settings-management',
+    icon: 'settings',
+    label: 'settings',
+    subItems: [
+      {
+        title: 'General Settings',
+        href: '/settings-management/general',
+        icon: 'general',
+        label: 'general-settings'
+      },
+      {
+        title: 'Payment Settings',
+        href: '/settings-management/payment',
+        icon: 'paymentSetting',
+        label: 'payment-settings'
+      },
       // {
-      //   title: 'API Settings',
-      //   href: '/settings-management/API',
-      //   icon: 'api',
-      //   label: 'api-settings'
-      // }
-    // ]
-  // },
+      //   title: 'Notification Settings',
+      //   href: '/settings-management/notifications',
+      //   icon: 'notificationSetting',
+      //   label: 'notification-settings'
+      // },
+      {
+        title: 'API Settings',
+        href: '/settings-management/API',
+        icon: 'api',
+        label: 'api-settings'
+      }
+    ]
+  },
  
 ];
