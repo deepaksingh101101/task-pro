@@ -5,6 +5,7 @@ import { Overview } from '@/components/overview';
 import { RecentSales } from '@/components/recent-sales';
 import { Button } from '@/components/ui/button';
 import itemsImage from '@/public/assets/icons/items.png'
+import TasksImage from '@/public/assets/icons/tasks.png'
 import orderImage from '@/public/assets/icons/order.png'
 import shopImage from '@/public/assets/icons/premuim3.png'
 import customerImage from '@/public/assets/icons/customers.png'
@@ -75,16 +76,17 @@ export default function page() {
   const cardData = [
     {
       id: 1,
-      title: 'Total Items',
+      title: 'Total Task',
       count: 234,
-      description: '4 Items newly Added',
-      imageSrc: itemsImage,
+      description: '4 Tasks newly Added',
+      imageSrc: TasksImage,
+     
     },
     {
       id: 2,
-      title: 'Total Orders',
+      title: 'Total Assigned',
       count: 150,
-      description: '2 Orders placed today',
+      description: '2 Tasks assigned today',
       imageSrc: orderImage,
     },
     {
@@ -96,7 +98,7 @@ export default function page() {
     },
     {
       id: 4,
-      title: 'Total Customers',
+      title: 'Total Users',
       count: 1024,
       description: '10 Newly added',
       imageSrc: customerImage,
@@ -112,53 +114,53 @@ export default function page() {
   //   { avatar: pumpkin, name: 'Pumpkin', email:"₹24/kg", amount: '39.00 KG' }
   // ];
 
- const subscriptionPlans = [
-  {
-    name: 'Basic Veggie Pack',
-    avatar: premium1,
-    amount: '₹500',
-    itemsIncluded: [
-      { itemName: 'Potato', quantity: '5 KG' },
-      { itemName: 'Tomato', quantity: '2 KG' }
-    ]
-  },
-  {
-    name: 'Family Veggie Pack',
-    amount: '₹1500',
-    avatar: premium2,
-    itemsIncluded: [
-      { itemName: 'Cucumber', quantity: '3 KG' },
-      { itemName: 'Onion', quantity: '5 KG' }
-    ]
-  },
-  // {
-  //   name: 'Premium Veggie Pack',
-  //   amount: '₹2500',
-  //   avatar: premium3,
-  //   itemsIncluded: [
-  //     { itemName: 'Onion', quantity: '10 KG' },
-  //     { itemName: 'Pumpkin', quantity: '2 KG' }
-  //   ]
-  // },
-  {
-    name: "Garden Herb Pack",
-    avatar: premium4,
-    amount: "₹800",
-    "itemsIncluded": [
-     { itemName: "Parsley", quantity: "200 Grams" },
-      { itemName: "Cilantro", quantity: "300 Grams" }
-    ]
-  },
-  {
-    name: "Root Harvest Pack",
-    avatar: premium5,
-    amount: "₹1200",
-    itemsIncluded: [
-      { itemName: "Carrot", quantity: "5 KG" },
-      { itemName: "Beetroot", quantity: "3 KG" },
-    ]
-  }
-];
+//  const subscriptionPlans = [
+//   {
+//     name: 'Basic Veggie Pack',
+//     avatar: premium1,
+//     amount: '₹500',
+//     itemsIncluded: [
+//       { itemName: 'Potato', quantity: '5 KG' },
+//       { itemName: 'Tomato', quantity: '2 KG' }
+//     ]
+//   },
+//   {
+//     name: 'Family Veggie Pack',
+//     amount: '₹1500',
+//     avatar: premium2,
+//     itemsIncluded: [
+//       { itemName: 'Cucumber', quantity: '3 KG' },
+//       { itemName: 'Onion', quantity: '5 KG' }
+//     ]
+//   },
+//   // {
+//   //   name: 'Premium Veggie Pack',
+//   //   amount: '₹2500',
+//   //   avatar: premium3,
+//   //   itemsIncluded: [
+//   //     { itemName: 'Onion', quantity: '10 KG' },
+//   //     { itemName: 'Pumpkin', quantity: '2 KG' }
+//   //   ]
+//   // },
+//   {
+//     name: "Garden Herb Pack",
+//     avatar: premium4,
+//     amount: "₹800",
+//     "itemsIncluded": [
+//      { itemName: "Parsley", quantity: "200 Grams" },
+//       { itemName: "Cilantro", quantity: "300 Grams" }
+//     ]
+//   },
+//   {
+//     name: "Root Harvest Pack",
+//     avatar: premium5,
+//     amount: "₹1200",
+//     itemsIncluded: [
+//       { itemName: "Carrot", quantity: "5 KG" },
+//       { itemName: "Beetroot", quantity: "3 KG" },
+//     ]
+//   }
+// ];
 
 
   // const storeData = [
@@ -245,12 +247,12 @@ export default function page() {
 
 
 <div className="px-5">
-<OrderRecentClient  />
+{/* <OrderRecentClient  /> */}
 
 </div>
 
 
-<div className="flex my-6 justify-between mx-3 lg:flex-nowrap flex-wrap ">
+{/* <div className="flex my-6 justify-between mx-3 lg:flex-nowrap flex-wrap ">
 <Card className="w-full me-3">
                     <CardHeader>
                       <CardTitle>Top Selling Items</CardTitle>
@@ -274,10 +276,10 @@ export default function page() {
                     </CardContent>
                   </Card>
                   
-                </div>
+                </div> */}
 
 
-                <div className="grid mx-3 grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
+                <div className="grid mx-3 grid-cols-1 gap-4 md:grid-cols-2 ">
                   <Card className="col-span-4">
                     <CardHeader>
                       <CardTitle>Overview</CardTitle>
@@ -286,7 +288,7 @@ export default function page() {
                       <Overview />
                     </CardContent>
                   </Card>
-                  <Card className="col-span-4 md:col-span-3">
+                  {/* <Card className="col-span-4 md:col-span-3">
                     <CardHeader>
                       <CardTitle>Popular Subscription</CardTitle>
                       <CardDescription>
@@ -296,7 +298,7 @@ export default function page() {
                     <CardContent>
                     <RecentSales sales={subscriptionPlans} />
                     </CardContent>
-                  </Card>
+                  </Card> */}
                 </div>
         {/* </ScrollArea> */}
        

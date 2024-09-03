@@ -9,13 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { TaskManagement } from '@/constants/task-management-data';
+import { ReferralManagementView } from '@/constants/referral-management-view-data';
 import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: TaskManagement;
+  data: ReferralManagementView; // Updated type to ReferralManagementView
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -23,42 +23,32 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  const onConfirm = async () => {
-    // Your confirm logic here
+
+
+  const handleCreateNewReferral = () => {
+    router.push('/referral-management/create'); 
   };
 
-  const taskStatus = () => {
-    router.push(`/subscription-management/edit/${data.taskId}`); 
+  const editReferral = () => {
+    router.push(`/referral-management/edit/${data.id}`); 
   };
 
-  const handleViewAndManageOrder = () => {
-    router.push(`/subscription-management/view/${data.taskId}`); 
+  const viewReferral = () => {
+    router.push(`/referral-management/view/${data.id}`); 
   };
 
-  const viewOrderDetals = () => {
-    router.push(`/order/${data.taskId}`); 
-  };
-
-  const hanldeResheduleAndSkips = () => {
-    router.push(`/subscription-management/toggleDeliveryDays/${data.taskId}`); 
-  };
-
-  const generatePackingList = () => {
-    router.push(`/subscription-management/manageCustomizationOption/${data.taskId}`); 
-  };
-
-  const assignDeliveryRoutes = () => {
-    router.push(`/order/assignOrder`); 
+  const updateReferralStatus = () => {
+    router.push(`/referral-management/update-status/${data.id}`); 
   };
 
   return (
     <>
-      <AlertModal
+      {/* <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
         onConfirm={onConfirm}
         loading={loading}
-      />
+      /> */}
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -68,23 +58,20 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem onClick={taskStatus}>
-            <Edit className="mr-2 h-4 w-4" />  Edit task
-
+          <DropdownMenuItem onClick={handleCreateNewReferral}>
+            <UserPlus className="mr-2 h-4 w-4" /> Create New Referral
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={viewOrderDetals}>
-            <Eye className="mr-2 h-4 w-4" /> View Task
+          <DropdownMenuItem onClick={editReferral}>
+            <Edit className="mr-2 h-4 w-4" /> Edit Referral
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={hanldeResheduleAndSkips}>
-            <UserCheck className="mr-2 h-4 w-4" /> Change Status
-
+          <DropdownMenuItem onClick={viewReferral}>
+            <Eye className="mr-2 h-4 w-4" /> View Referral
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={assignDeliveryRoutes}>
-            <UserCheck className="mr-2 h-4 w-4" /> View Bids
-
+          <DropdownMenuItem onClick={updateReferralStatus}>
+            <UserCheck className="mr-2 h-4 w-4" /> Update Referral Status
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={assignDeliveryRoutes}>
-            <UserCheck className="mr-2 h-4 w-4" /> Biding Table
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            <Trash className="mr-2 h-4 w-4" /> Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

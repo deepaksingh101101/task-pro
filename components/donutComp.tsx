@@ -4,8 +4,8 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recha
 
 const donutData = [
   { name: 'Unassigned', value: 400 },
-  { name: 'Shipped', value: 300 },
-  { name: 'Delivered', value: 200 },
+  { name: 'Assigned', value: 300 },
+  { name: 'Approved', value: 200 },
   { name: 'Canceled', value: 100 }
 ];
 
@@ -47,7 +47,7 @@ export function DonutComp() {
       </ResponsiveContainer>
       <div className='absolute top-[55%] left-[41%] transform -translate-x-1/2 -translate-y-1/2 text-center'>
         <div className='text-2xl font-bold tracking-tight'>{totalItems}</div>
-        <div className='text-sm font-medium tracking-tight'>Total Orders</div>
+        <div className='text-sm font-medium tracking-tight'>Total Users</div>
       </div>
     </div>
   );

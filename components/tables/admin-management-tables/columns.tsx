@@ -4,9 +4,9 @@ import React from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AdminManagement } from '@/constants/admin-management-data'; 
-import { Mail } from 'lucide-react'; 
-import { CellAction } from './cell-action'; 
 
+import { CellAction } from './cell-action'; 
+import { Check, X, Mail, Phone, MapPin, Award } from 'lucide-react'; 
 // Function to generate a random color in hex format
 const getRandomColor = () => {
   const letters = '0123456789ABCDEF';
@@ -57,9 +57,9 @@ export const columns: ColumnDef<AdminManagement>[] = [
           className="flex items-center justify-center w-8 h-8 rounded-full mr-2"
           style={{ backgroundColor: getRandomColor(), color: 'white' }}
         >
-          {row.original.firstName?.charAt(0) || ''} 
+          {row.original.fullName?.charAt(0) || ''} 
         </div>
-        <span>{row.original.firstName} {row.original.lastName}</span> 
+        <span>{row.original.fullName} </span> 
       </div>
     ),
     enableSorting: true,
@@ -82,9 +82,25 @@ export const columns: ColumnDef<AdminManagement>[] = [
     accessorKey: 'department', 
     header: 'Department',
   },
+  
   {
-    accessorKey: 'status', 
-    header: 'Status',
+    accessorKey: 'status',
+    header: 'Activity Status',
+    cell: ({ row }) => (
+      <div
+        style={{ borderRadius: '20px' }}
+        className={`flex items-center px-2 py-1 ${
+          row.original.status === 'Active' ? 'bg-orange-400' : 'bg-red-600'
+        }`}
+      >
+        {row.original.status === 'Active' ? (
+          <Check width={16} height={16} className="text-orange-800 mr-2" />
+        ) : (
+          <X width={16} height={16} className="text-red-900 mr-2" />
+        )}
+        <span className="text-black bold">{row.original.status}</span>
+      </div>
+    ),
   },
   {
     accessorKey: 'lastLogin', 

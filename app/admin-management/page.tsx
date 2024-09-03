@@ -3,7 +3,7 @@ import BreadCrumb from '@/components/breadcrumb';
 import MainLayout from '@/components/layout/main-layout';
 import { AdminManagementClient } from '@/components/tables/admin-management-tables/client';
 
-const breadcrumbItems = [{ title: 'Complaint Management', link: '/dashboard/complaint-management' }];
+const breadcrumbItems = [{ title: 'Admin Management', link: '/dashboard/admin-management' }];
 
 export default function SubscriptionManagementPage() {
   return (

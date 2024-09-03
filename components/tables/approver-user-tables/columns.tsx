@@ -2,7 +2,7 @@
 
 import { ColumnDef } from '@tanstack/react-table';
 import { CellAction } from './cell-action'; 
-import { UserManagement } from '@/constants/user-management-data'; // Import your UserManagement type
+import { UserManagement } from '@/constants/user-management-data'; 
 import { Checkbox } from '@/components/ui/checkbox';
 import { Check, X, Mail, Phone, MapPin, Award } from 'lucide-react'; 
 import { DataTable } from '@/components/ui/data-table';
@@ -38,12 +38,12 @@ export const columns: ColumnDef<UserManagement>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'User ID', 
+    accessorKey: 'userID', 
     header: 'User ID',
     cell: ({ row }) => (
       <div className="flex justify-center">
         <span className="text-red-600 font-bold px-1" style={{ borderRadius: '50%' }}>
-          {row.original.sno} 
+          {row.original.userId} 
         </span>
       </div>
     ),
@@ -138,17 +138,17 @@ export const columns: ColumnDef<UserManagement>[] = [
     cell: ({ row }) => (
         <div className='flex items-center'>
             <Award className="text-yellow-500 mr-2" width={16} height={16} />
-            {/* <span>{row.original.rewardsPoints ?? 0}</span>  */}
+            <span>{row.original.rewardsPoints}</span> 
         </div>
     )
   },
   {
     accessorKey: 'accountStatus',
     header: 'Account Status',
-    // ... (You might want to customize the display based on the status values)
+    
   },
 
-  // ... (other existing columns like subscription dates, employeeName, etc.)
+ 
 
   {
     id: 'actions',

@@ -9,13 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { TaskManagement } from '@/constants/task-management-data';
+import { ReferralManagement } from '@/constants/referral-management-data';
 import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: TaskManagement;
+  data: ReferralManagement;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -27,28 +27,20 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     // Your confirm logic here
   };
 
-  const taskStatus = () => {
-    router.push(`/subscription-management/edit/${data.taskId}`); 
+  const handleCreateNewReferral = () => {
+    router.push('/referral-management/create'); 
   };
 
-  const handleViewAndManageOrder = () => {
-    router.push(`/subscription-management/view/${data.taskId}`); 
+  const editReferral = () => {
+    router.push(`/referral-management/edit/${data.id}`); 
   };
 
-  const viewOrderDetals = () => {
-    router.push(`/order/${data.taskId}`); 
+  const viewReferral = () => {
+    router.push(`/referral-management/view/${data.id}`); 
   };
 
-  const hanldeResheduleAndSkips = () => {
-    router.push(`/subscription-management/toggleDeliveryDays/${data.taskId}`); 
-  };
-
-  const generatePackingList = () => {
-    router.push(`/subscription-management/manageCustomizationOption/${data.taskId}`); 
-  };
-
-  const assignDeliveryRoutes = () => {
-    router.push(`/order/assignOrder`); 
+  const updateReferralStatus = () => {
+    router.push(`/referral-management/update-status/${data.id}`); 
   };
 
   return (
@@ -68,23 +60,21 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem onClick={taskStatus}>
-            <Edit className="mr-2 h-4 w-4" />  Edit task
 
+          {/* <DropdownMenuItem onClick={handleCreateNewReferral}>
+            <UserPlus className="mr-2 h-4 w-4" /> Create New Referral
+          </DropdownMenuItem> */}
+          <DropdownMenuItem onClick={editReferral}>
+            <Edit className="mr-2 h-4 w-4" /> Edit Coupon
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={viewOrderDetals}>
-            <Eye className="mr-2 h-4 w-4" /> View Task
+          {/* <DropdownMenuItem onClick={viewReferral}>
+            <Eye className="mr-2 h-4 w-4" /> View Referral
+          </DropdownMenuItem> */}
+          <DropdownMenuItem onClick={updateReferralStatus}>
+            <UserCheck className="mr-2 h-4 w-4" /> Toggle Status
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={hanldeResheduleAndSkips}>
-            <UserCheck className="mr-2 h-4 w-4" /> Change Status
-
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={assignDeliveryRoutes}>
-            <UserCheck className="mr-2 h-4 w-4" /> View Bids
-
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={assignDeliveryRoutes}>
-            <UserCheck className="mr-2 h-4 w-4" /> Biding Table
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            <Trash className="mr-2 h-4 w-4" /> Delete Coupon
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

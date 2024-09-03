@@ -8,25 +8,26 @@ import { Separator } from '@/components/ui/separator';
 import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { columns } from './columns';
-import { DeliveryManagement, DeliveryManagementData } from '@/constants/delivery-management-data';
+import { TaskManagement , TaskManagementData} from '@/constants/task-management-data';
+
 import { CalendarDateRangePicker } from '@/components/date-range-picker';
 
 export const TaskClient: React.FC = () => {
   const router = useRouter();
-  const initialData: DeliveryManagement[] = DeliveryManagementData;
-  const [data, setData] = useState<DeliveryManagement[]>(initialData);
+  const initialData: TaskManagement[] = TaskManagementData;
+  const [data, setData] = useState<TaskManagement[]>(initialData);
 
   const handleSearch = (searchValue: string) => {
     const filteredData = initialData.filter(item =>
-      item.customerName.toLowerCase().includes(searchValue.toLowerCase())
+      item.taskName.toLowerCase().includes(searchValue.toLowerCase())
     );
     setData(filteredData);
   };
 
   const filters = [
     {
-      label: 'Payment Status',
-      subOptions: ['Paid', 'Unpaid'],
+      label: 'Task Status',
+      subOptions: ['Approved', 'Pending'],
     },
     {
       label: 'Delivery Status',
@@ -43,7 +44,7 @@ export const TaskClient: React.FC = () => {
         />
         <Button
           className="text-xs md:text-sm"
-          onClick={() => router.push(`/order`)}
+          onClick={() => router.push(`/task`)}
         >
           <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>
@@ -54,7 +55,7 @@ export const TaskClient: React.FC = () => {
         <CalendarDateRangePicker />
       </div>
       <DataTable
-        searchKey="customerName"
+        searchKey="taskName"
         columns={columns}
         data={data}
         filters={filters}

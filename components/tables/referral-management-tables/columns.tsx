@@ -3,9 +3,9 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { CellAction } from './cell-action';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ComplaintManagementUser } from '@/constants/complaint-management-data-user';
+import { ReferralManagement } from '@/constants/referral-management-data';
 
-export const columns: ColumnDef<ComplaintManagementUser>[] = [
+export const columns: ColumnDef<ReferralManagement>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -26,20 +26,28 @@ export const columns: ColumnDef<ComplaintManagementUser>[] = [
     enableHiding: false
   },
   {
-    accessorKey: 'sno',
-    header: 'Sno'
+    accessorKey: 'id',
+    header: 'ID'
   },
   {
-    accessorKey: 'name',
-    header: 'name'
+    accessorKey: 'assignedTo',
+    header: 'Assigned To'
   },
   {
-    accessorKey: 'complaintType',
-    header: 'Complaint Type'
+    accessorKey: 'discountPercentage',
+    header: 'Discount',
+    cell: ({ row }) => (
+      <div className="flex justify-center">
+        <span className='text-center' >{row.original.discountPercentage} %</span>
+      </div>
+    )
   },
   {
-    accessorKey: 'description',
-    header: 'Description'
+    accessorKey: 'validity',
+    header: 'Validity',
+    cell: ({ row }) => (
+      <span>{row.original.validity} Month</span>
+    )
   },
   {
     accessorKey: 'status',
@@ -48,18 +56,14 @@ export const columns: ColumnDef<ComplaintManagementUser>[] = [
       <div 
         style={{ borderRadius: "20px" }}
         className={`flex items-center px-2 py-1 ${
-          row.original.status === 'Open' ? 'bg-orange-400' :
-          row.original.status === 'Closed' ? 'bg-red-400' :
+          row.original.status === 'Active' ? 'bg-orange-200' :
+          row.original.status === 'Inactive' ? 'bg-red-600' :
           'bg-red-400'
         }`}
       >
         <span className='text-black bold'>{row.original.status}</span>
       </div>
     )
-  },
-  {
-    accessorKey: 'resolution',
-    header: 'Resolution'
   },
   {
     id: 'actions',

@@ -1,8 +1,8 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { TaskManagement } from '@/constants/task-management';
+import { TaskManagement } from '@/constants/task-management-data';
 import { CellAction } from './cell-action';
 import { Checkbox } from '@/components/ui/checkbox';
-
+import { Check, X, Mail, Phone, MapPin, Award } from 'lucide-react';
 export const columns: ColumnDef<TaskManagement>[] = [
   {
     id: 'select',
@@ -93,19 +93,35 @@ export const columns: ColumnDef<TaskManagement>[] = [
       <span>{row.original.dueDate ? new Date(row.original.dueDate).toLocaleDateString() : 'N/A'}</span>
     ),
   },
+
   {
     accessorKey: 'Status',
-    header: 'Status',
+    header: 'Activity Status',
     cell: ({ row }) => (
-      <span>
-        {row.original.Status}
-      </span>
+      <div
+        style={{ borderRadius: '20px' }}
+        className={`flex items-center px-2 py-1 ${
+          row.original.Status === 'Approved' ? 'bg-orange-400' : 'bg-red-600'
+        }`}
+      >
+        {row.original.Status === 'Progress' ? (
+          <Check width={16} height={20} className="text-orange-800 mr-2" />
+        ) : (
+          <X width={16} height={20} className="text-red-900 mr-2" />
+        )}
+        <span className="text-black bold">{row.original.Status}</span>
+      </div>
     ),
   },
   {
     accessorKey: 'address',
     header: 'Address',
-    cell: ({ row }) => <span>{row.original.address}</span>,
+    cell: ({ row }) => (
+      <div className="flex items-center mt-1 me-4">
+        <MapPin className="text-red-500 mr-2" width={16} height={16} />
+        {row.original.address} 
+      </div>
+    ),
   },
   {
     accessorKey: 'city',
@@ -122,18 +138,25 @@ export const columns: ColumnDef<TaskManagement>[] = [
     header: 'Country',
     cell: ({ row }) => <span>{row.original.country}</span>,
   },
+  
   {
-    accessorKey: 'rewards',
-    header: 'Rewards',
-    cell: ({ row }) => <span>₹{row.original.rewards}</span>,
+    accessorKey: 'rewards', 
+    header: 'Rewards Points',
+    cell: ({ row }) => (
+        <div className='flex items-center'>
+            <Award className="text-yellow-500 mr-2" width={25} height={29} />
+            <span>{row.original.rewards}</span> 
+        </div>
+    )
   },
   {
     accessorKey: 'feedback',
     header: 'Feedback',
     cell: ({ row }) => <span>{row.original.feedback}</span>,
   },
-  // {
-  //   id: 'actions',
-  //   cell: ({ row }) => <CellAction data={row.original} />,
-  // },
+
+  {
+    id: 'actions',
+    cell: ({ row }) => <CellAction data={row.original} />,
+  },
 ];

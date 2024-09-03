@@ -163,6 +163,12 @@ export const navItems: NavItem[] = [
     icon: 'task',
     label: 'task-management'
   },
+  {
+    title: 'Referral Management',
+    href: '/referral',
+    icon: 'order',
+    label: 'create-Referral'
+  },
   // {
   //   title: 'Customer Management',
   //   href: '/user-management',
@@ -205,12 +211,12 @@ export const navItems: NavItem[] = [
  
 
 
-  // {
-  //   title: 'Complaint Management',
-  //   href: '/complaint-management',
-  //   icon: 'complaint',
-  //   label: 'create-complaint'
-  // },
+  {
+    title: 'Complaint Management',
+    href: '/complaint-management',
+    icon: 'complaint',
+    label: 'create-complaint'
+  },
 
   // {
   //   title: 'Report And Analytics',
