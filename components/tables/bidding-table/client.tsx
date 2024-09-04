@@ -66,6 +66,7 @@ export const BiddingClient: React.FC = () => {
         data={data}
         onSearch={handleSearch}
         filters={filters}
+        rowNo={0}
         // onSort={handleSort}
       />
     </>
