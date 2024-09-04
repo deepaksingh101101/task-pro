@@ -20,6 +20,7 @@ import { format } from 'date-fns';
 
 interface TaskManagementFormType {
   initialData: any | null;
+  isEnabled?: boolean;
 }
 
 const taskFormSchema = z.object({
@@ -51,23 +52,31 @@ const taskFormSchema = z.object({
   gender:  z.enum(['Male', 'Female', 'Other']).optional(),
   nationality: z.array(z.string()).optional(),
   language: z.string().optional(),
-  taskCompletionHistory: z.string().optional(),
-  taskRatings: z.string().optional(),
+  
+  taskCompletionHistoryProfessional: z.number().optional(),
+  taskRatingsProfessional: z.number().optional(),
+  industryExperienceProfessional: z.number().optional(),
+  taskCompletionHistoryApprover: z.number().optional(),
+  taskRatingsApprover: z.number().optional(),
+  industryExperienceApprover: z.number().optional(),
+  timeAvailability:  z.enum(['6-8am', '8-2pm', '4-9pm']).optional(),
+  time: z.enum(['Full-Time', 'Part-Time']).optional(),
+  immediateAvailability: z.enum(['Yes', 'No']).optional()
 });
 
-export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) => {
+export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEnabled}) => {
   const params = useParams();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? 'Edit Task' : 'Create New Task';
+  const title = initialData ? 'Edit Task' : 'Create New Task'  ;
   const description = initialData ? 'Edit the Task details.' : 'To create a new Task, fill in the required information.';
   const action = initialData ? 'Save changes' : 'Create';
 
   const form = useForm({
     resolver: zodResolver(taskFormSchema),
     mode: 'onChange',
-    defaultValues: {
+    defaultValues: initialData ||{
       taskId: '',
       title: '',
       taskName: '',
@@ -88,15 +97,22 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
       country: '',
       state: '',
       tag: undefined,
-      nationality: '', 
-      ageRange: '',
-      language : '', 
-      gender: '',
-      occupation: '',
-      educationLevel:'',
+      nationality: undefined, 
+      ageRange: undefined,
+      language : undefined, 
+      gender: undefined,
+      occupation: undefined,
+      educationLevel:undefined,
       value: undefined,
-      taskCompletionHistory: '',
-      taskRatings: ''
+      taskCompletionHistoryProfessional: undefined,
+      taskRatingsProfessional: undefined,
+      industryExperienceProfessional: undefined,
+      taskCompletionHistoryApprover: undefined,
+      taskRatingsApprover: undefined,
+      industryExperienceApprover: undefined,
+      timeAvailability: undefined,
+      time: undefined,
+      immediateAvailability: undefined
     }
   });
 
@@ -125,7 +141,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
         <Heading title={title} description={description} />
         {initialData && (
           <Button
-            disabled={loading}
+            disabled={isEnabled || loading}
             variant="destructive"
             size="sm"
           >
@@ -147,10 +163,10 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Task ID</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.taskId?.message}</FormMessage>
-                  </FormItem>
+                    <FormMessage>{errors.taskId?.message?.toString()}</FormMessage>
+                    </FormItem>
                 )}
               />
 
@@ -161,9 +177,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Title</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.title?.message}</FormMessage>
+                    <FormMessage>{errors.title?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -175,9 +191,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Task Name</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.taskName?.message}</FormMessage>
+                    <FormMessage>{errors.taskName?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -189,9 +205,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Task Type</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.taskType?.message}</FormMessage>
+                    <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -233,7 +249,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                         />
                       </PopoverContent>
                     </Popover>
-                    <FormMessage>{errors.dueDate?.message}</FormMessage>
+                    <FormMessage>{errors.dueDate?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -245,9 +261,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Assigned To</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.assignedTo?.message}</FormMessage>
+                    <FormMessage>{errors.assignedTo?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -259,9 +275,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Assigned By</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.assignedBy?.message}</FormMessage>
+                    <FormMessage>{errors.assignedBy?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -303,7 +319,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                         />
                       </PopoverContent>
                     </Popover>
-                    <FormMessage>{errors.assignedDate?.message}</FormMessage>
+                    <FormMessage>{errors.assignedDate?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -315,9 +331,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Status</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.Status?.message}</FormMessage>
+                    <FormMessage>{errors.Status?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -329,9 +345,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Maximum Cost Assigned</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} disabled={loading} />
+                      <Input type="number" {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.maximumCostAssigned?.message}</FormMessage>
+                    <FormMessage>{errors.maximumCostAssigned?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -343,9 +359,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Rewards</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} disabled={loading} />
+                      <Input type="number" {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.rewards?.message}</FormMessage>
+                    <FormMessage>{errors.rewards?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -357,9 +373,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Feedback</FormLabel>
                     <FormControl>
-                      <Textarea {...field} disabled={loading} />
+                      <Textarea {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.feedback?.message}</FormMessage>
+                    <FormMessage>{errors.feedback?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -371,9 +387,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea {...field} disabled={loading} />
+                      <Textarea {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.description?.message}</FormMessage>
+                    <FormMessage>{errors.description?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -388,42 +404,16 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                       <Textarea
                         {...field}
                         placeholder="Enter subtasks, separated by commas"
-                        disabled={loading}
+                        disabled={isEnabled || loading}
                       />
                     </FormControl>
-                    <FormMessage>{errors.subtasks?.message}</FormMessage>
+                    <FormMessage>{errors.subtasks?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
-               <Controller
-                control={form.control}
-                name="taskCompletionHistory"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Task Completion History</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={loading} />
-                    </FormControl>
-                    <FormMessage>{errors.taskType?.message}</FormMessage>
-                  </FormItem>
-                )}
-/>
-                <Controller
-                 control={form.control}
-                    name="taskRatings"
-                  render={({ field }) => (
-                <FormItem>
-                 <FormLabel>Task Ratings</FormLabel>
-             <FormControl>
-                <Input {...field} disabled={loading} />
-                </FormControl>
-             <FormMessage>{errors.taskType?.message}</FormMessage>
-    </FormItem>
-  )}
-/>
+              
             </div>
           </div>
-
           {/* Address Details Section */}
           <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
             <h2 className="text-xl font-semibold  bg-gray-100">Geographic Criteria</h2>
@@ -435,9 +425,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Address</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.address?.message}</FormMessage>
+                    <FormMessage>{errors.address?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -449,9 +439,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>City/Town</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.city?.message}</FormMessage>
+                    <FormMessage>{errors.city?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -463,9 +453,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>State</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.state?.message}</FormMessage>
+                    <FormMessage>{errors.state?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -477,9 +467,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Pincode</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.pincode?.message}</FormMessage>
+                    <FormMessage>{errors.pincode?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -491,9 +481,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                   <FormItem>
                     <FormLabel>Country</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={loading} />
+                      <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.country?.message}</FormMessage>
+                    <FormMessage>{errors.country?.message?.toString()}</FormMessage>
                   </FormItem>
                 )}
               />
@@ -511,7 +501,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                           { value: 'Urban', label: 'Urban' },
                           { value: 'Rural', label: 'Rural' }
                         ]}
-                        isDisabled={loading}
+                        isDisabled={isEnabled || loading}
                       />
                     </FormControl>
                     {/* <FormMessage>{errors.tag?.message}</FormMessage> */}
@@ -520,6 +510,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
               />
             </div>
           </div>
+           {/* Demographic criteria */}
           <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
           <h2 className="text-xl font-semibold bg-gray-100">Demographic Criteria</h2>
   <div className="w-full gap-8 md:grid md:grid-cols-2">
@@ -538,10 +529,10 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                 { value: '36-50', label: '36-50' },
                 { value: '50+', label: '50+' }
               ]}
-              isDisabled={loading}
+              isDisabled={isEnabled || loading}
             />
           </FormControl>
-          <FormMessage>{errors.ageRange?.message}</FormMessage>
+          <FormMessage>{errors.ageRange?.message?.toString()}</FormMessage>
         </FormItem>
       )}
     />
@@ -559,10 +550,10 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                 { value: 'Female', label: 'Female' },
                 { value: 'Other', label: 'Other' }
               ]}
-              isDisabled={loading}
+              isDisabled={isEnabled || loading}
             />
           </FormControl>
-          <FormMessage>{errors.gender?.message}</FormMessage>
+          <FormMessage>{errors.gender?.message?.toString()}</FormMessage>
         </FormItem>
       )}
     />
@@ -581,11 +572,11 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                 { value: 'british', label: 'British' },
                 // Add more nationalities as needed
               ]}
-              isDisabled={loading}
+              isDisabled={isEnabled || loading}
               isMulti
             />
           </FormControl>
-          <FormMessage>{errors.nationality?.message}</FormMessage>
+          <FormMessage>{errors.nationality?.message?.toString()}</FormMessage>
         </FormItem>
       )}
     />
@@ -604,11 +595,11 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                 { value: 'spanish', label: 'Spanish' },
                 // Add more languages as needed
               ]}
-              isDisabled={loading}
+              isDisabled={isEnabled || loading}
               isMulti
             />
           </FormControl>
-          <FormMessage>{errors.language?.message}</FormMessage>
+          <FormMessage>{errors.language?.message?.toString()}</FormMessage>
         </FormItem>
       )}
     />
@@ -627,11 +618,11 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                 { value: 'teacher', label: 'Teacher' },
                 // Add more occupations as needed
               ]}
-              isDisabled={loading}
+              isDisabled={isEnabled || loading}
               isMulti
             />
           </FormControl>
-          <FormMessage>{errors.occupation?.message}</FormMessage>
+          <FormMessage>{errors.occupation?.message?.toString()}</FormMessage>
         </FormItem>
       )}
     />
@@ -650,20 +641,181 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
                 { value: 'masters', label: "Master's Degree" },
                 { value: 'phd', label: 'PhD' }
               ]}
-              isDisabled={loading}
+              isDisabled={isEnabled || loading}
             />
           </FormControl>
-          <FormMessage>{errors.educationLevel?.message}</FormMessage>
+          <FormMessage>{errors.educationLevel?.message?.toString()}</FormMessage>
         </FormItem>
       )}
     />
   </div>
-</div>
+          </div>
+           {/*Experience-based criteria */}
+          <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
+          <h2 className="text-xl font-semibold bg-gray-100"> Experience-Based Criteria</h2>
+          <div className="space-y-4 ">
+          <h2 className="text-xl font-semibold"> For Professional</h2>
+          <div className="w-full gap-8 md:grid md:grid-cols-2">
+ <Controller
+                control={form.control}
+                name="taskCompletionHistoryProfessional"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Task Completion History</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+/>
+                <Controller
+                 control={form.control}
+                    name="taskRatingsProfessional"
+                  render={({ field }) => (
+                <FormItem>
+                 <FormLabel>Task Ratings</FormLabel>
+             <FormControl>
+                <Input {...field} disabled={isEnabled || loading} />
+                </FormControl>
+             <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+    </FormItem>
+  )}
+/>
+<Controller
+                control={form.control}
+                name="industryExperienceProfessional"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Industry Experience</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+/>
+ </div>
+          </div>
+          <div className="space-y-4 ">
+          <h2 className="text-xl font-semibold "> For Approver</h2>
+          <div className="w-full gap-8 md:grid md:grid-cols-2">
+ <Controller
+                control={form.control}
+                name="taskCompletionHistoryApprover"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Task Completion History</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+/>
+                <Controller
+                 control={form.control}
+                    name="taskRatingsApprover"
+                  render={({ field }) => (
+                <FormItem>
+                 <FormLabel>Task Ratings</FormLabel>
+             <FormControl>
+                <Input {...field} disabled={isEnabled || loading} />
+                </FormControl>
+             <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+    </FormItem>
+  )}
+/>
+<Controller
+                control={form.control}
+                name="industryExperienceApprover"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Industry Experience</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+/>
+ </div>
+ </div>
+  
+          </div>
+           {/* Availability Criteria*/}
+          <div className="space-y-4 border border-gray-300 p-4 rounded-md">
+  <h2 className="text-xl font-semibold bg-gray-100">Availability Criteria</h2>
+  <div className="w-full gap-8 md:grid md:grid-cols-2">
+    <Controller
+      control={form.control}
+      name="timeAvailability"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Time Availability</FormLabel>
+          <FormControl>
+            <ReactSelect
+              {...field}
+              options={[
+                { value: '6-8am', label: '6-8 am' },
+                { value: '8-2pm', label: '8-2 pm' },
+                { value: '4-9pm', label: '4-9 pm' },
+              ]}
+              isDisabled={isEnabled || loading}
+            />
+          </FormControl>
+          <FormMessage>{errors.timeAvailability?.message?.toString()}</FormMessage>
+        </FormItem>
+      )}
+    />
+<Controller
+  control={form.control}
+  name="time"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>Time</FormLabel>
+      <FormControl>
+        <ReactSelect
+          {...field}
+          options={[
+            { value: 'Full-Time', label: 'Full-Time' },
+            { value: 'Part-Time', label: 'Part-Time' },
+          ]}
+          isDisabled={isEnabled || loading}
+        />
+      </FormControl>
+      {/* <FormMessage>{errors.time?.message}</FormMessage> */}
+    </FormItem>
+  )}
+/> 
+    <Controller
+      control={form.control}
+      name="immediateAvailability"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Immediate Availability</FormLabel>
+          <FormControl>
+            <ReactSelect
+              {...field}
+              options={[
+                { value: 'yes', label: 'Yes' },
+                { value: 'no', label: 'No' },
+              ]}
+              isDisabled={isEnabled || loading}
+            />
+          </FormControl>
+          <FormMessage>{errors.immediateAvailability?.message?.toString()}</FormMessage>
+        </FormItem>
+      )}
+    />
+  </div>
+          </div>
+
           {/* Form Actions */}
           <div className="flex justify-end">
             <Button
               type="submit"
-              disabled={loading}
+              disabled={isEnabled || loading}
               className="ml-4 w-full"
             >
               {action}
@@ -674,3 +826,4 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData }) =>
     </>
   );
 };
+
