@@ -1,35 +1,35 @@
 // Define the ComplaintManagement interface
 export interface ComplaintManagement {
   sno: number;
-  complaintType: 'Delay' | 'Bad quality' | 'Wrong item' | 'Not reached';
+  complaintType: 'Incomplete Task' | 'Incorrect Data' | 'Missed Deadline' | 'Task Assignment Issue';
   status: 'Active' | 'Inactive';
-  resolution?: 'Coupon' | 'Store credits' | 'Add-on bag';
+  resolution?: 'Additional instructions provided' | 'Revised report submitted' | 'Extension granted' | 'Technical issue resolved';
 }
 
 // Sample data for the complaint management system
 export const ComplaintManagementData: ComplaintManagement[] = [
   {
     sno: 1,
-    complaintType: 'Delay',
+    complaintType: 'Incomplete Task',
     status: 'Active',
-    resolution: 'Coupon'
+    resolution: 'Additional instructions provided'
   },
   {
     sno: 2,
-    complaintType: 'Bad quality',
+    complaintType: 'Incorrect Data',
     status: 'Inactive',
-    resolution: 'Store credits'
+    resolution: 'Revised report submitted'
   },
   {
     sno: 3,
-    complaintType: 'Wrong item',
+    complaintType: 'Missed Deadline',
     status: 'Active',
-    resolution: 'Add-on bag'
+    resolution: 'Extension granted'
   },
   {
     sno: 4,
-    complaintType: 'Not reached',
+    complaintType: 'Task Assignment Issue',
     status: 'Inactive',
-    resolution: 'Add-on bag'
+    resolution: 'Technical issue resolved'
   }
 ];

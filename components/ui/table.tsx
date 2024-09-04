@@ -48,20 +48,30 @@ const TableFooter = React.forwardRef<
 ));
 TableFooter.displayName = 'TableFooter';
 
-const TableRow = React.forwardRef<
-  HTMLTableRowElement,
-  React.HTMLAttributes<HTMLTableRowElement>
->(({ className, ...props }, ref) => (
-  <tr
-    ref={ref}
-    style={{borderBottomWidth:"0px"}}
-    className={cn(
-      'border-b-0 transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
-      className
-    )}
-    {...props}
-  />
-));
+interface TableRowProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  highlightedRow?: number; // Add a prop to specify which row to highlight
+  rowNumber?: number; // Prop to receive the row number
+}
+
+const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(
+  ({ className, highlightedRow, rowNumber, ...props }, ref) => {
+    const isHighlighted = highlightedRow === rowNumber; // Check if the current row should be highlighted
+
+    return (
+      <tr
+        ref={ref}
+        style={{ borderBottomWidth: "0px" }}
+        className={cn(
+          'border-b-0 transition-colors  data-[state=selected]:bg-muted',
+          isHighlighted ? 'bg-green-200' : '', // Apply green background if highlighted
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
+
 TableRow.displayName = 'TableRow';
 
 const TableHead = React.forwardRef<
@@ -71,7 +81,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      'h-10 px-2   text-left align-middle font-medium whitespace-nowrap border-r  first:border-l-0 last:border-r-0',
+      'h-10 px-2 bg-[#e7912e]  text-left align-middle font-medium whitespace-nowrap border-r  first:border-l-0 last:border-r-0',
       className
     )}
     {...props}

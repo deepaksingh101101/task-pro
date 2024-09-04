@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator';
 import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { columns } from './columns';
-import { ComplaintManagement, ComplaintManagementData } from '@/constants/complaint-management-data';
+
 import { AdminManagement, AdminManagementData } from '@/constants/admin-management-data';
 
 export const AdminManagementClient: React.FC = () => {
@@ -20,22 +20,22 @@ export const AdminManagementClient: React.FC = () => {
 
   const handleSearch = (searchValue: string) => {
     const filteredData = initialData.filter(item =>
-      item.firstName.toLowerCase().includes(searchValue.toLowerCase())
+      item.fullName.toLowerCase().includes(searchValue.toLowerCase())
     );
     setData(filteredData);
   };
 
-  const handleSort = (sortBy: string, sortOrder: 'asc' | 'desc') => {
-    // Example: Sorting by first name
-    const sortedData = [...data].sort((a, b) => {
-      if (sortOrder === 'asc') {
-        return a.firstName.localeCompare(b.firstName);
-      } else {
-        return b.firstName.localeCompare(a.firstName);
-      }
-    });
-    setData(sortedData);
-  };
+  // const handleSort = (sortBy: string, sortOrder: 'asc' | 'desc') => {
+  //   // Example: Sorting by first name
+  //   const sortedData = [...data].sort((a, b) => {
+  //     if (sortOrder === 'asc') {
+  //       return a.fullName.localeCompare(b.fullName);
+  //     } else {
+  //       return b.firstName.localeCompare(a.firstName);
+  //     }
+  //   });
+  //   setData(sortedData);
+  // };
   const filters = [
     {
       label: 'Role ',
@@ -52,7 +52,7 @@ export const AdminManagementClient: React.FC = () => {
         />
         <Button
           className="text-xs md:text-sm"
-          onClick={() => router.push(`/employee`)}
+          onClick={() => router.push(`/admin`)}
         >
           <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>

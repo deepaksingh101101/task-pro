@@ -38,12 +38,12 @@ export const columns: ColumnDef<UserManagement>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'User ID', 
+    accessorKey: 'userID', 
     header: 'User ID',
     cell: ({ row }) => (
       <div className="flex justify-center">
         <span className="text-red-600 font-bold px-1" style={{ borderRadius: '50%' }}>
-          {row.original.sno} 
+          {row.original.userId} 
         </span>
       </div>
     ),
@@ -120,11 +120,11 @@ export const columns: ColumnDef<UserManagement>[] = [
       <div
         style={{ borderRadius: '20px' }}
         className={`flex items-center px-2 py-1 ${
-          row.original.accountStatus === 'Active' ? 'bg-green-400' : 'bg-red-400'
+          row.original.accountStatus === 'Active' ? 'bg-orange-400' : 'bg-red-600'
         }`}
       >
         {row.original.accountStatus === 'Active' ? (
-          <Check width={16} height={16} className="text-green-500 mr-2" />
+          <Check width={16} height={16} className="text-orange-800 mr-2" />
         ) : (
           <X width={16} height={16} className="text-red-900 mr-2" />
         )}
@@ -138,7 +138,7 @@ export const columns: ColumnDef<UserManagement>[] = [
     cell: ({ row }) => (
         <div className='flex items-center'>
             <Award className="text-yellow-500 mr-2" width={16} height={16} />
-            {/* <span>{row.original.rewardsPoints ?? 0}</span>  */}
+            <span>{row.original.rewardsPoints ?? 0}</span> 
         </div>
     )
   },

@@ -38,17 +38,7 @@ export const ApproverUserClient: React.FC = () => {
     setData(filteredData);
   };
 
-  const handleSort = (sortBy: string, sortOrder: 'asc' | 'desc') => {
-    const sortedData = [...data].sort((a, b) => {
-      if (sortOrder === 'asc') {
-        return a.subscriptionType.localeCompare(b.subscriptionType);
-      } else {
-        return b.subscriptionType.localeCompare(a.subscriptionType);
-      }
-    });
-    setData(sortedData);
-  };
-
+ 
   return (
     <>
       <div className="flex items-start justify-between">

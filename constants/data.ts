@@ -144,12 +144,7 @@ export const navItems: NavItem[] = [
     }
   ]
   },
-  // {
-  //   title: 'Bag Management',
-  //   href: '/bag',
-  //   icon: 'order',
-  //   label: 'create-order'
-  // },
+ 
   // {
   //   title: 'Subscription',
   //   href: '/subscriptions',
@@ -162,7 +157,18 @@ export const navItems: NavItem[] = [
     icon: 'user',
     label: 'admin'
   },
-  
+  {
+    title: 'Task Management',
+    href: '/task-management',
+    icon: 'task',
+    label: 'task-management'
+  },
+  {
+    title: 'Referral Management',
+    href: '/referral',
+    icon: 'order',
+    label: 'create-Referral'
+  },
   // {
   //   title: 'Customer Management',
   //   href: '/user-management',
@@ -205,12 +211,12 @@ export const navItems: NavItem[] = [
  
 
 
-  // {
-  //   title: 'Complaint Management',
-  //   href: '/complaint-management',
-  //   icon: 'complaint',
-  //   label: 'create-complaint'
-  // },
+  {
+    title: 'Complaint Management',
+    href: '/complaint-management',
+    icon: 'complaint',
+    label: 'create-complaint'
+  },
 
   // {
   //   title: 'Report And Analytics',
@@ -286,37 +292,37 @@ export const navItems: NavItem[] = [
   //     }
   //   ]
   // },
-  // {
-  //   title: 'Settings',
-  //   href: '/settings-management',
-  //   icon: 'settings',
-  //   label: 'settings',
-  //   subItems: [
-  //     {
-  //       title: 'General Settings',
-  //       href: '/settings-management/general',
-  //       icon: 'general',
-  //       label: 'general-settings'
-  //     },
-  //     {
-  //       title: 'Payment Settings',
-  //       href: '/settings-management/payment',
-  //       icon: 'paymentSetting',
-  //       label: 'payment-settings'
-  //     },
-  //     {
-  //       title: 'Notification Settings',
-  //       href: '/settings-management/notifications',
-  //       icon: 'notificationSetting',
-  //       label: 'notification-settings'
-  //     },
+  {
+    title: 'Settings',
+    href: '/settings-management',
+    icon: 'settings',
+    label: 'settings',
+    subItems: [
+      {
+        title: 'General Settings',
+        href: '/settings-management/general',
+        icon: 'general',
+        label: 'general-settings'
+      },
+      {
+        title: 'Payment Settings',
+        href: '/settings-management/payment',
+        icon: 'paymentSetting',
+        label: 'payment-settings'
+      },
       // {
-      //   title: 'API Settings',
-      //   href: '/settings-management/API',
-      //   icon: 'api',
-      //   label: 'api-settings'
-      // }
-    // ]
-  // },
+      //   title: 'Notification Settings',
+      //   href: '/settings-management/notifications',
+      //   icon: 'notificationSetting',
+      //   label: 'notification-settings'
+      // },
+      {
+        title: 'API Settings',
+        href: '/settings-management/API',
+        icon: 'api',
+        label: 'api-settings'
+      }
+    ]
+  },
  
 ];

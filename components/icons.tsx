@@ -48,6 +48,7 @@ import {
   BarChart2,
   TrendingDown,
   TrendingUp,
+  CheckSquare 
 } from 'lucide-react';
 
 
@@ -120,4 +121,5 @@ export const Icons = {
   incomeSummary: Calendar, // new line
   expenseSummary: BarChart2, // new line
   incomeVsExpense: BarChart2, // new line
+  task: CheckSquare
 };

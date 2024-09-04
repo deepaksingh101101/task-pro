@@ -12,33 +12,34 @@ export interface ComplaintManagementUser {
 export const ComplaintManagementUserData: ComplaintManagementUser[] = [
   {
     sno: 1,
-    name: "Deepak Singh",
-    complaintType: 'Delay',
-    description: 'Delivery was delayed by 2 days.',
+    name: "Amit Patel",
+    complaintType: 'Incomplete Task',
+    description: 'The survey task was not completed as per the requirements.',
     status: 'Open',
-    resolution: 'Coupon'
+    resolution: 'Additional instructions provided'
   },
   {
     sno: 2,
-    name: "Arya Singh",
-    complaintType: 'Bad quality',
-    description: 'Vegetables were not fresh.',
+    name: "Priya Sharma",
+    complaintType: 'Incorrect Data',
+    description: 'The data collected for the market research task was inaccurate.',
     status: 'Closed',
-    resolution: 'Store credits'
+    resolution: 'Revised report submitted'
   },
   {
     sno: 3,
-    name: "Kartik Singh",
-    complaintType: 'Wrong item',
-    description: 'Received a fruit basket instead of a veggie bag.',
+    name: "Rajeev Kumar",
+    complaintType: 'Missed Deadline',
+    description: 'The feedback form task was not submitted by the due date.',
     status: 'Open',
-    resolution: 'Add-on bag'
+    resolution: 'Extension granted'
   },
   {
     sno: 4,
-    name: "Shivam Kumar",
-    complaintType: 'Not reached',
-    description: 'Order was not delivered.',
-    status: 'Closed'
+    name: "Neha Reddy",
+    complaintType: 'Task Assignment Issue',
+    description: 'Assigned task was not visible in the task list.',
+    status: 'Closed',
+    resolution: 'Technical issue resolved'
   }
 ];

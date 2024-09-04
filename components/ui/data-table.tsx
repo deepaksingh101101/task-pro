@@ -1,5 +1,3 @@
-'use client';
-
 import {
   ColumnDef,
   flexRender,
@@ -7,7 +5,6 @@ import {
   getFilteredRowModel,
   useReactTable,
   getSortedRowModel,
-  Table,
 } from '@tanstack/react-table';
 
 import { Table as UiTable, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -15,7 +12,7 @@ import { Input } from './input';
 import { Button } from './button';
 import { ScrollArea, ScrollBar } from './scroll-area';
 import { useState } from 'react';
-import { Plus, ChevronDown, ChevronRight } from 'lucide-react';
+import { Plus, ChevronDown } from 'lucide-react';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from './dropdown-menu';
 
 interface FilterOption {
@@ -29,6 +26,7 @@ interface DataTableProps<TData, TValue> {
   searchKey?: string;
   onSearch?: (value: string) => void;
   filters?: FilterOption[];
+  rowNo?: number; // Row number to highlight
   meta?: {
     updateData: (rowIndex: number, columnId: string, value: any) => void;
     updateColumnData: (columnId: string, value: any) => void;
@@ -42,6 +40,7 @@ export function DataTable<TData, TValue>({
   onSearch,
   filters,
   meta,
+  rowNo
 }: DataTableProps<TData, TValue>) {
   const [filterInput, setFilterInput] = useState('');
 
@@ -70,12 +69,12 @@ export function DataTable<TData, TValue>({
   return (
     <>
       <div className="flex justify-end">
-      <Input
-  value={filterInput}
-  onChange={handleSearchChange}
-  placeholder={`Search by ${(searchKey || 'defaultSearchKey').charAt(0).toUpperCase() + (searchKey || 'defaultSearchKey').slice(1)}`}
-  className="mb-4 max-w-64"
-/>
+        <Input
+          value={filterInput}
+          onChange={handleSearchChange}
+          placeholder={`Search by ${(searchKey || 'defaultSearchKey').charAt(0).toUpperCase() + (searchKey || 'defaultSearchKey').slice(1)}`}
+          className="mb-4 max-w-64"
+        />
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -101,10 +100,10 @@ export function DataTable<TData, TValue>({
       </div>
 
       <ScrollArea className="rounded-md border min-h-[70vh]">
-      <UiTable className="relative">
+        <UiTable className="relative">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow key={headerGroup.id} highlightedRow={rowNo}>
                 {headerGroup.headers.map((header) => (
                   <TableHead key={header.id}>
                     {header.isPlaceholder
@@ -116,11 +115,18 @@ export function DataTable<TData, TValue>({
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row, index) => (
+                <TableRow
+                  key={row.id}
+                  rowNumber={index} // Pass row number
+                  highlightedRow={rowNo} // Pass the highlighted row number
+                  data-state={row.getIsSelected() && 'selected'}
+                >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
                   ))}
                 </TableRow>
               ))

@@ -1,233 +1,108 @@
 import { format, parseISO } from 'date-fns';
-import { NavItem } from '@/types';
 
 export type UserManagement = {
-  sno: number;
+  userId: number;
   firstName: string;
   lastName: string;
   email: string;
   phoneNumber: string;
-  city?: string;
-  sector?: string;
-  society?:string;
-  houseNumber?: string;
-  dob?:string;
-  gender?:string;
-  address: {
-    houseNumber: string;
-    addressLine1: string;
-    addressLine2?: string;
-  };
-  assignedRoutes?: string[]; // Array of assigned routes
-  subscriptionType: string;
-  deliveryFrequency: string;
-  paymentType: string;
-  subscriptionStartDate: string;
-  subscriptionEndDate: string;
+  society: string;
+  roleAssignmentDate: string;
+  verificationStatus: string;
+  lastLogin: string;
+  activityStatus: string;
+  rewardsPoints: number;
   accountStatus: 'Active' | 'Inactive';
-  employeeName: string;
-  lastUpdateDate: string;
-  createdDate: string;
 };
 
 // Helper function to format dates
 const formatDate = (dateString: string) => {
   return format(parseISO(dateString), 'dd MMM yyyy');
 };
+
 export const userManagementData: UserManagement[] = [
   {
-    sno: 1,
-    firstName: 'John',
-    lastName: 'Doe',
+    userId: 1,
+    firstName: 'Arya',
+    lastName: 'Singh',
     email: 'john.doe@example.com',
     phoneNumber: '123-456-7890',
-    city: "Delhi",
-    sector: "sector 68",
-    society:"m3m Marina",
-    houseNumber: "s4 1404",
-    dob:"11/JUL/2024",
-    gender:"Male",
-    address: {
-      houseNumber: '123',
-      addressLine1: 'Main St',
-      addressLine2: 'Apt 4B',
-    },
-    assignedRoutes: ['Route 1'],
-    subscriptionType: 'Weekly',
-    deliveryFrequency: 'Biweekly',
-    paymentType: 'Credit Card',
-    subscriptionStartDate: formatDate('2023-01-01'),
-    subscriptionEndDate: formatDate('2023-12-31'),
+    society: 'M3M Marina',
+    roleAssignmentDate: formatDate('2023-06-15'),
+    verificationStatus: 'Verified',
+    lastLogin: formatDate('2023-09-01'),
+    activityStatus: 'Active',
+    rewardsPoints: 150,
     accountStatus: 'Active',
-    employeeName: 'Deepak Singh',
-    lastUpdateDate: formatDate('2023-07-01'),
-    createdDate: formatDate('2023-01-01'),
   },
   {
-    sno: 2,
+    userId: 2,
     firstName: 'Ridhi',
     lastName: 'Mishra',
     email: 'ridhi.mishra@example.com',
-    phoneNumber: '11111111',
-    city: "Delhi",
-    sector: "sector 68",
-    society:"m3m Marina",
-    houseNumber: "s4 1404",
-    dob:"11/JUL/2024",
-    gender:"Male",
-    address: {
-      houseNumber: '123',
-      addressLine1: 'Main St',
-      addressLine2: 'Apt 4B',
-    },
-    assignedRoutes: ['Route 3'],
-    subscriptionType: 'Quarterly',
-    deliveryFrequency: 'Weekly',
-    paymentType: 'Net Banking',
-    subscriptionStartDate: formatDate('2023-01-01'),
-    subscriptionEndDate: formatDate('2023-12-31'),
+    phoneNumber: '987-654-3210',
+    society: 'DLF Phase 3',
+    roleAssignmentDate: formatDate('2023-07-10'),
+    verificationStatus: 'Pending',
+    lastLogin: formatDate('2023-08-28'),
+    activityStatus: 'Inactive',
+    rewardsPoints: 80,
     accountStatus: 'Inactive',
-    employeeName: 'Amar Singh',
-    lastUpdateDate: formatDate('2023-07-01'),
-    createdDate: formatDate('2023-01-01'),
   },
   {
-    sno: 3,
+    userId: 3,
     firstName: 'Deepak',
     lastName: 'Singh',
     email: 'deepak.singh@example.com',
-    phoneNumber: '123-456-7890',
-    city: "Delhi",
-    sector: "sector 68",
-    society:"m3m Marina",
-    houseNumber: "s4 1404",
-    dob:"11/JUL/2024",
-    gender:"Male",
-    address: {
-      houseNumber: '123',
-      addressLine1: 'Main St',
-      addressLine2: 'Apt 4B',
-    },
-    assignedRoutes: ['Route 4'],
-    subscriptionType: 'Semi Annual',
-    deliveryFrequency: 'Monthly',
-    paymentType: 'UPI',
-    subscriptionStartDate: formatDate('2023-01-01'),
-    subscriptionEndDate: formatDate('2023-12-31'),
+    phoneNumber: '555-123-4567',
+    society: 'Palm Gardens',
+    roleAssignmentDate: formatDate('2023-05-20'),
+    verificationStatus: 'Verified',
+    lastLogin: formatDate('2023-08-25'),
+    activityStatus: 'Active',
+    rewardsPoints: 200,
     accountStatus: 'Active',
-    employeeName: 'Aman Singh',
-    lastUpdateDate: formatDate('2023-07-01'),
-    createdDate: formatDate('2023-01-01'),
   },
   {
-    sno: 4,
+    userId: 4,
     firstName: 'Shivam',
     lastName: 'Kumar',
     email: 'shivam.kumar@example.com',
-    phoneNumber: '123-456-7890',
-    city: "Delhi",
-    sector: "sector 68",
-    society:"m3m Marina",
-    houseNumber: "s4 1404",
-    dob:"11/JUL/2024",
-    gender:"Male",
-    address: {
-      houseNumber: '123',
-      addressLine1: 'Main St',
-      addressLine2: 'Apt 4B',
-    },
-    assignedRoutes: ['Route 6'],
-    subscriptionType: 'Annual',
-    deliveryFrequency: 'Fortnightly',
-    paymentType: 'Net Banking',
-    subscriptionStartDate: formatDate('2023-01-01'),
-    subscriptionEndDate: formatDate('2023-12-31'),
+    phoneNumber: '666-777-8888',
+    society: 'UniWorld City',
+    roleAssignmentDate: formatDate('2023-04-12'),
+    verificationStatus: 'Pending',
+    lastLogin: formatDate('2023-09-02'),
+    activityStatus: 'Inactive',
+    rewardsPoints: 60,
     accountStatus: 'Inactive',
-    employeeName: 'Roshan Singh',
-    lastUpdateDate: formatDate('2023-07-01'),
-    createdDate: formatDate('2023-01-01'),
   },
   {
-    sno: 5,
+    userId: 5,
     firstName: 'Vikash',
     lastName: 'Singh',
     email: 'vikash.singh@example.com',
-    phoneNumber: '123-456-7890',
-    city: "Delhi",
-    sector: "sector 68",
-    society:"m3m Marina",
-    houseNumber: "s4 1404",
-    dob:"11/JUL/2024",
-    gender:"Male",
-    address: {
-      houseNumber: '123',
-      addressLine1: 'Main St',
-      addressLine2: 'Apt 4B',
-    },
-    assignedRoutes: ['Route 6'],
-    subscriptionType: 'Trial',
-    deliveryFrequency: 'Biweekly',
-    paymentType: 'Credit Card',
-    subscriptionStartDate: formatDate('2023-01-01'),
-    subscriptionEndDate: formatDate('2023-12-31'),
+    phoneNumber: '999-888-7777',
+    society: 'Emerald Hills',
+    roleAssignmentDate: formatDate('2023-03-05'),
+    verificationStatus: 'Verified',
+    lastLogin: formatDate('2023-09-01'),
+    activityStatus: 'Active',
+    rewardsPoints: 120,
     accountStatus: 'Active',
-    employeeName: 'Vikash Singh',
-    lastUpdateDate: formatDate('2023-07-01'),
-    createdDate: formatDate('2023-01-01'),
   },
   {
-    sno: 6,
+    userId: 6,
     firstName: 'Prashant',
     lastName: 'Singh',
     email: 'prashant.singh@example.com',
-    phoneNumber: '123-456-7890',
-    city: "Delhi",
-    sector: "sector 68",
-    society:"m3m Marina",
-    houseNumber: "s4 1404",
-    dob:"11/JUL/2024",
-    gender:"Male",
-    address: {
-      houseNumber: '123',
-      addressLine1: 'Main St',
-      addressLine2: 'Apt 4B',
-    },
-    assignedRoutes: ['Route 6'],
-    subscriptionType: 'Quarterly',
-    deliveryFrequency: 'Daily',
-    paymentType: 'UPI',
-    subscriptionStartDate: formatDate('2023-01-01'),
-    subscriptionEndDate: formatDate('2023-12-31'),
+    phoneNumber: '444-555-6666',
+    society: 'Ireo Skyon',
+    roleAssignmentDate: formatDate('2023-02-25'),
+    verificationStatus: 'Pending',
+    lastLogin: formatDate('2023-08-30'),
+    activityStatus: 'Inactive',
+    rewardsPoints: 40,
     accountStatus: 'Inactive',
-    employeeName: 'Prashant Singh',
-    lastUpdateDate: formatDate('2023-07-01'),
-    createdDate: formatDate('2023-01-01'),
-  },
-];
-
-export const navItems: NavItem[] = [
-  {
-    title: 'Dashboard',
-    href: '/dashboard',
-    icon: 'dashboard',
-    label: 'Dashboard',
-  },
-  {
-    title: 'User',
-    href: '/user',
-    icon: 'user',
-    label: 'User',
-  },
-  {
-    title: 'User Management',
-    href: '/user-management',
-    icon: 'management',
-    label: 'User Management',
-  },
-  {
-    title: 'Profile',
-    href: '/profile',
-    icon: 'profile',
-    label: 'Profile',
   },
 ];
