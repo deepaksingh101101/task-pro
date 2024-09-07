@@ -9,13 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { UserManagement } from '@/constants/user-management-data';
+import { Finance } from '@/constants/finanace-data'; // Ensure this import matches the new data structure
 import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: UserManagement;
+  data: Finance; 
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -24,20 +24,20 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
 
   const onConfirm = async () => {
-    //  confirm logic here
+    // Your confirm logic here
   };
 
-  
-
-  const handleEditUser = () => {
-    router.push(`/user/edit/${data.userId}`); 
+  const handleEditDetails = () => {
+    router.push(`/bid-management/edit/${data.serialNumber}`); // Update route based on new data structure
   };
 
-  const handleViewUser = () => {
-    router.push(`/user/view/${data.userId}`); 
+  const handleViewDetails = () => {
+    router.push(`/bid-management/view/${data.serialNumber}`); // Update route based on new data structure
   };
 
-  
+  const generateInvoice = () => {
+    router.push(`/bid-management/generate-invoice/${data.serialNumber}`); // Update route based on new data structure
+  };
 
   return (
     <>
@@ -57,19 +57,17 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
+          <DropdownMenuItem onClick={handleEditDetails}>
+            <Edit className="mr-2 h-4 w-4" /> Edit Details
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={handleViewDetails}>
+            <Eye className="mr-2 h-4 w-4" /> View Details
+          </DropdownMenuItem>
+          
+          <DropdownMenuItem onClick={generateInvoice}>
+            <UserCheck className="mr-2 h-4 w-4" /> Generate Invoice
+          </DropdownMenuItem>
          
-          <DropdownMenuItem onClick={handleEditUser}>
-            <Edit className="mr-2 h-4 w-4" /> Edit User Details
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleViewUser}>
-            <Eye className="mr-2 h-4 w-4" /> View User
-          </DropdownMenuItem>
-          {/* <DropdownMenuItem onClick={handleAssignEmployee}>
-            <UserCheck className="mr-2 h-4 w-4" /> Assign Employee
-          </DropdownMenuItem> */}
-          <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" /> Deactivate User
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

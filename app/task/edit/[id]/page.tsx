@@ -4,7 +4,7 @@ import { CreateSubscriptionOne } from '@/components/forms/subscription-stepper/c
 import MainLayout from '@/components/layout/main-layout';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-const breadcrumbItems = [{ title: 'Create Task', link: '/dashboard/task' }];
+const breadcrumbItems = [{ title: 'Edit Task', link: '/dashboard/task' }];
 export default function page() {
   const initialData = {
     taskId: 'T001',

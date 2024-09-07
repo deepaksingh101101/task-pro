@@ -169,12 +169,12 @@ export const navItems: NavItem[] = [
     icon: 'order',
     label: 'create-Referral'
   },
-  // {
-  //   title: 'Customer Management',
-  //   href: '/user-management',
-  //   icon: 'management',
-  //   label: 'User Management'
-  // },
+  {
+    title: 'Finance Management',
+    href: '/finance-management',
+    icon: 'management',
+    label: 'Finance Management'
+  },
   // {
   //   title: 'Subscription/Order Management',
   //   href: '/order-management',
@@ -316,6 +316,12 @@ export const navItems: NavItem[] = [
       //   icon: 'notificationSetting',
       //   label: 'notification-settings'
       // },
+      {
+        title: 'Permissions Settings',
+        href: '/permission-management',
+        icon: 'general',
+        label: 'general-settings'
+      },
       {
         title: 'API Settings',
         href: '/settings-management/API',

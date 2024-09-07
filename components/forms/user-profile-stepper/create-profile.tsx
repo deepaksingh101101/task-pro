@@ -33,7 +33,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 interface ProfileFormType {
   initialData: any | null;
-  categories: any;
+  categories?: any;
+  isEnabled?: boolean;
+
 }
 
 const FormSchema = z.object({
@@ -52,22 +54,36 @@ const FormSchema = z.object({
 
 export const CreateProfileOne: React.FC<ProfileFormType> = ({
   initialData,
+  isEnabled,
   categories,
 }) => {
   const params = useParams();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const title = initialData ? "Edit User" : "Create User";
-  const description = initialData
-    ? "Edit the user profile."
+  const title = initialData && isEnabled ? "View User" : initialData ? "Edit User" : "Create User";
+  const description = initialData && isEnabled 
+    ? "View the user profile." : initialData ? "Edit the user profile."
     : "To create a new user, we first need some basic information.";
-  const toastMessage = initialData ? "User updated." : "User created.";
+  const textMessage = initialData ? "User updated." : "User created.";
   const action = initialData ? "Save changes" : "Create";
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    mode: "onChange",
+    mode: 'onChange',
+    defaultValues: initialData || {
+      userId: '',                // Corresponds to the userId in the schema
+      firstName: '',             // Corresponds to the firstName in the schema
+      lastName: '',              // Corresponds to the lastName in the schema
+      contact: '',               // Corresponds to the contact in the schema
+      address: '',               // Corresponds to the address in the schema
+      roleAssignmentDate: '',    // Corresponds to roleAssignmentDate in the schema
+      verificationStatus: '',    // Corresponds to verificationStatus in the schema
+      lastLogin: '',             // Corresponds to lastLogin in the schema
+      activityStatus: '',        // Corresponds to activityStatus in the schema
+      rewardsPoints: 0,          // Corresponds to rewardsPoints in the schema
+      accountStatus: '',         // Corresponds to accountStatus in the schema
+    },
   });
 
   const {
@@ -155,7 +171,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
         <Heading title={title} description={description} />
         {initialData && (
           <Button
-            disabled={loading}
+            disabled={isEnabled || loading}
             variant="destructive"
             size="sm"
             onClick={() => setOpen(true)}
@@ -224,7 +240,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>User ID</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Enter User ID" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="Enter User ID" {...field} />
                   </FormControl>
                   <FormMessage>{errors.userId?.message}</FormMessage>
                 </FormItem>
@@ -237,7 +253,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="John" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="John" {...field} />
                   </FormControl>
                   <FormMessage>{errors.firstName?.message}</FormMessage>
                 </FormItem>
@@ -250,7 +266,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Doe" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="Doe" {...field} />
                   </FormControl>
                   <FormMessage>{errors.lastName?.message}</FormMessage>
                 </FormItem>
@@ -263,7 +279,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>Contact</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="123-456-7890" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="123-456-7890" {...field} />
                   </FormControl>
                   <FormMessage>{errors.contact?.message}</FormMessage>
                 </FormItem>
@@ -276,7 +292,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>Address</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="123 Main St" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="123 Main St" {...field} />
                   </FormControl>
                   <FormMessage>{errors.address?.message}</FormMessage>
                 </FormItem>
@@ -292,7 +308,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Input
-                          disabled={loading}
+                          disabled={isEnabled || loading}
                           placeholder="Select Date"
                           value={field.value ? format(new Date(field.value), 'yyyy-MM-dd') : ''}
                         />
@@ -329,7 +345,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                   <Select
                     value={field.value}
                     onValueChange={(value) => field.onChange(value)}
-                    disabled={loading}
+                    disabled={isEnabled || loading}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Verification Status" />
@@ -354,7 +370,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Input
-                          disabled={loading}
+                          disabled={isEnabled || loading}
                           placeholder="Select Date"
                           value={field.value ? format(new Date(field.value), 'yyyy-MM-dd') : ''}
                         />
@@ -391,7 +407,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                   <Select
                     value={field.value}
                     onValueChange={(value) => field.onChange(value)}
-                    disabled={loading}
+                    disabled={isEnabled || loading}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Activity Status" />
@@ -414,7 +430,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                   <FormControl>
                     <Input
                       type="number"
-                      disabled={loading}
+                      disabled={isEnabled || loading}
                       placeholder="0"
                       {...field}
                     />
@@ -432,7 +448,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                   <Select
                     value={field.value}
                     onValueChange={(value) => field.onChange(value)}
-                    disabled={loading}
+                    disabled={isEnabled || loading}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Account Status" />
@@ -449,14 +465,14 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
             />
           </div>
 
-          <Button
-            disabled={loading}
+         {( !isEnabled) && <Button
+            disabled={isEnabled || loading}
             type="submit"
             className="w-full"
             onClick={() => form.handleSubmit(onSubmit)()}
           >
             {action}
-          </Button>
+          </Button>}
         </form>
       </Form>
     </>

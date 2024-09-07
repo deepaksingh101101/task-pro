@@ -1,15 +1,14 @@
 import { CalendarDateRangePicker } from '@/components/date-range-picker';
 import MainLayout from '@/components/layout/main-layout';
+import BreadCrumb from '@/components/breadcrumb';
 import ProtectedRoute from '@/components/layout/protected-route';
 import { Overview } from '@/components/overview';
-import { RecentSales } from '@/components/recent-sales';
 import { Button } from '@/components/ui/button';
-import itemsImage from '@/public/assets/icons/items.png'
 import TasksImage from '@/public/assets/icons/tasks.png'
 import orderImage from '@/public/assets/icons/order.png'
-import shopImage from '@/public/assets/icons/premuim3.png'
-import customerImage from '@/public/assets/icons/customers.png'
-
+import moneyImage from '@/public/assets/icons/money.png'
+import rupeesImage from '@/public/assets/icons/rupees.png'
+import { FinanceManagementClient } from '@/components/tables/finance-management-tables/client';
 import shop1 from '@/public/assets/icons/shop1.png'
 import shop2 from '@/public/assets/icons/shop2.png'
 import shop3 from '@/public/assets/icons/shop3.png'
@@ -36,73 +35,66 @@ import { OrderRecentClient } from '@/components/tables/recent-order-tables/clien
 import { Sale, salesData, vegData } from '@/constants/salesData';
 
 
+const breadcrumbItems = [{ title: 'Finanace Management', link: '/dashboard/finanace-management' }];
 
-
-export default function page() {
-
-
+export default function FinanceManagementPage() {
   
-
-
   
-  // const subscriptionPlans: Sale[] = [
-  //   {
-  //     avatar: premium1,
-  //     name: 'Basic Veggie Pack',
-  //     email: 'Includes: Potato - 5 KG, Tomato - 2 KG',
-  //     amount: '₹500',
-  //   },
-  //   {
-  //     avatar: premium2,
-  //     name: 'Family Veggie Pack',
-  //     email: 'Includes: Cucumber - 3 KG, Onion - 5 KG',
-  //     amount: '₹1500',
-  //   },
-  //   {
-  //     avatar: premium4,
-  //     name: 'Garden Herb Pack',
-  //     email: 'Includes: Parsley - 200 Grams, Cilantro - 300 Grams',
-  //     amount: '₹800',
-  //   },
-  //   {
-  //     avatar: premium5,
-  //     name: 'Root Harvest Pack',
-  //     email: 'Includes: Carrot - 5 KG, Beetroot - 3 KG',
-  //     amount: '₹1200',
-  //   }
-  // ];
+  const subscriptionPlans: Sale[] = [
+    {
+      avatar: premium1,
+      name: 'Basic Veggie Pack',
+      email: 'Includes: Potato - 5 KG, Tomato - 2 KG',
+      amount: '₹500',
+    },
+    {
+      avatar: premium2,
+      name: 'Family Veggie Pack',
+      email: 'Includes: Cucumber - 3 KG, Onion - 5 KG',
+      amount: '₹1500',
+    },
+    {
+      avatar: premium4,
+      name: 'Garden Herb Pack',
+      email: 'Includes: Parsley - 200 Grams, Cilantro - 300 Grams',
+      amount: '₹800',
+    },
+    {
+      avatar: premium5,
+      name: 'Root Harvest Pack',
+      email: 'Includes: Carrot - 5 KG, Beetroot - 3 KG',
+      amount: '₹1200',
+    }
+  ];
   
 
   const cardData = [
+
     {
       id: 1,
-      title: 'Total Task',
-      count: 234,
-      description: '4 Tasks newly Added',
-      imageSrc: TasksImage,
-     
+      title: 'Total Task Amount',
+      count: 1024,
+      // description: '10 Newly added',
+      imageSrc: rupeesImage,
     },
     {
       id: 2,
-      title: 'Total Assigned',
-      count: 150,
-      description: '2 Tasks assigned today',
-      imageSrc: orderImage,
+      title: 'Total Deposit',
+      count: '24',
+      // description: '5 Newly Added',
+      imageSrc: moneyImage,
     },
+   
     {
       id: 3,
-      title: 'Total Professional',
-      count: '24',
-      description: '5 Newly Added',
-      imageSrc: shopImage,
+      title: 'Total Task',
+      count: 234,
+      // description: '4 Tasks newly Added',
+      imageSrc: TasksImage,
+     
     },
-    {
-      id: 4,
-      title: 'Total Users',
-      count: 1024,
-      description: '10 Newly added',
-      imageSrc: customerImage,
-    },
+   
+    
   ];
   
 
@@ -172,18 +164,20 @@ export default function page() {
   // ];
 
   return (
-    <ProtectedRoute>
-      <MainLayout meta={{ title: 'Dashboard' }}>
-        {/* <ScrollArea className="h-full"> */}
+      <MainLayout meta={{ title: 'Finanace Management' }}>
+        <ScrollArea className="h-full">
+        <div className="flex-1 space-y-4 min-h-screen p-4 pt-6 md:p-8">
+        <BreadCrumb items={breadcrumbItems} />
           <div className="flex-1 min space-y-4 p-4 pt-6 md:p-8">
             <div className="flex items-center justify-between space-y-2">
-              <h2 className="text-3xl font-bold tracking-tight">
-                Hi, Welcome back 👋
-              </h2>
-              <div className="hidden items-center space-x-2 md:flex">
-                <CalendarDateRangePicker />
-                <Button>Download</Button>
-              </div>
+              
+            <div className="hidden items-center space-x-2 md:flex">
+            <CalendarDateRangePicker />         
+            <Button>Today</Button>
+            <Button>Weekly</Button>
+            <Button>Monthly</Button>
+            <Button>Annually</Button>
+            </div>
             </div>
             <Tabs defaultValue="overview" className="space-y-4">
               {/* <TabsList>
@@ -193,7 +187,7 @@ export default function page() {
                 </TabsTrigger>
               </TabsList> */}
               <TabsContent value="overview" className="space-y-4">
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {/* <Card className='flex justify-between items-center' >
                     <div className="flex flex-col">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -221,9 +215,9 @@ export default function page() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{data.count}</div>
-              <p className="text-xs mt-1 text-muted-foreground">
+              {/* <p className="text-xs mt-1 text-muted-foreground">
                 {data.description}
-              </p>
+              </p> */}
             </CardContent>
           </div>
           <Image
@@ -240,15 +234,19 @@ export default function page() {
               </TabsContent>
             </Tabs>
           </div>
+          <h2 className="text-xl font-bold tracking-tight">
+               Total Expense Graph
+              </h2>
           <div className="text-white-50 flex lg:flex-nowrap flex-wrap justify-between items-center">
+         
           <AreaChartComp/>
-          <DonutComp/>
+     
         </div>
 
 
 <div className="px-5">
-{/* <OrderRecentClient  /> */}
 
+<FinanceManagementClient/>
 </div>
 
 
@@ -277,32 +275,10 @@ export default function page() {
                   </Card>
                   
                 </div> */}
-
-
-                <div className="grid mx-3 grid-cols-1 gap-4 md:grid-cols-2 ">
-                  <Card className="col-span-4">
-                    <CardHeader>
-                      <CardTitle>Overview</CardTitle>
-                    </CardHeader>
-                    <CardContent className="pl-2">
-                      <Overview />
-                    </CardContent>
-                  </Card>
-                  {/* <Card className="col-span-4 md:col-span-3">
-                    <CardHeader>
-                      <CardTitle>Popular Subscription</CardTitle>
-                      <CardDescription>
-                        You have 5 most popular Subscription  .
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                    <RecentSales sales={subscriptionPlans} />
-                    </CardContent>
-                  </Card> */}
                 </div>
-        {/* </ScrollArea> */}
+        </ScrollArea>
        
       </MainLayout>
-    </ProtectedRoute>
+    
   );
 }

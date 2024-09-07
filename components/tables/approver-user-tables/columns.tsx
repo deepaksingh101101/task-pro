@@ -106,7 +106,21 @@ export const columns: ColumnDef<UserManagement>[] = [
   {
     accessorKey: 'verificationStatus',
     header: 'Verification Status',
-    
+    cell: ({ row }) => (
+      <div
+        style={{ borderRadius: '20px' }}
+        className={`flex items-center px-2 py-1 ${
+          row.original.verificationStatus === 'Verified' ? 'bg-yellow-300' : 'bg-orange-200' 
+        }`}
+      >
+        {row.original.verificationStatus === 'Verified' ? (
+          <Check width={16} height={16} className= "text-yellow-900 mr-2" />
+        ) : (
+          <X width={16} height={16} className="text-orange-800 mr-2" />
+        )}
+        <span className="text-black bold">{row.original.verificationStatus}</span>
+      </div>
+    ),
   },
   {
     accessorKey: 'lastLogin', 
@@ -145,11 +159,22 @@ export const columns: ColumnDef<UserManagement>[] = [
   {
     accessorKey: 'accountStatus',
     header: 'Account Status',
-    
+    cell: ({ row }) => (
+      <div
+        style={{ borderRadius: '20px' }}
+        className={`flex items-center px-2 py-1 ${
+          row.original.accountStatus === 'Active' ? 'bg-orange-400' : 'bg-green-400'
+        }`}
+      >
+        {row.original.accountStatus === 'Active' ? (
+          <Check width={16} height={16} className="text-orange-800 mr-2" />
+        ) : (
+          <X width={16} height={16} className="text-green-800 mr-2" />
+        )}
+        <span className="text-black bold">{row.original.accountStatus}</span>
+      </div>
+    ),
   },
-
- 
-
   {
     id: 'actions',
     cell: ({ row }) => <CellAction data={row.original} />,

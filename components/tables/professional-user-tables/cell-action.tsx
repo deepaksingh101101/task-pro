@@ -27,21 +27,17 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     //  confirm logic here
   };
 
-  const handleRegisterNewUser = () => {
-    router.push('/user-management/register'); 
-  };
+ 
 
   const handleEditUser = () => {
-    router.push(`/user-management/edit/${data}`); 
+    router.push(`/user/edit/${data.userId}`); 
   };
 
   const handleViewUser = () => {
-    router.push(`/user-management/view/${data}`); 
+    router.push(`/user/view/${data.userId}`); 
   };
 
-  const handleAssignEmployee = () => {
-    router.push(`/user-management/assign/${data}`); 
-  };
+  
 
   return (
     <>

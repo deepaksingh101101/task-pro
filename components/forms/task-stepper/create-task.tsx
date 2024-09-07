@@ -69,8 +69,11 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? 'Edit Task' : 'Create New Task'  ;
-  const description = initialData ? 'Edit the Task details.' : 'To create a new Task, fill in the required information.';
+  const title = initialData && isEnabled ? "View Task" : initialData ? "Edit Task" : "Create New Task";
+  const description = initialData && isEnabled 
+    ? "View the Task details." : initialData ? "Edit the Task details."
+    : "To create a new Task, fill in the required information.";
+ 
   const action = initialData ? 'Save changes' : 'Create';
 
   const form = useForm({
@@ -813,13 +816,14 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
 
           {/* Form Actions */}
           <div className="flex justify-end">
-            <Button
+          { initialData  === null &&   <Button
               type="submit"
               disabled={isEnabled || loading}
               className="ml-4 w-full"
             >
               {action}
             </Button>
+}
           </div>
         </form>
       </Form>

@@ -9,13 +9,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { UserManagement } from '@/constants/user-management-data';
-import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck } from 'lucide-react';
+import { ViewHistory } from '@/constants/viewHistory-data';
+
+import { MoreHorizontal, Eye, UserCheck, Trash } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: UserManagement;
+  data: ViewHistory;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -24,20 +25,18 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
 
   const onConfirm = async () => {
-    //  confirm logic here
+    // Your confirm logic here
   };
 
-  
+//   const viewBid = () => {
+//     // Logic to view bid
+//     router.push(`/complaint-management/viewBid/${data.userId}`);
+//   };
 
-  const handleEditUser = () => {
-    router.push(`/user/edit/${data.userId}`); 
-  };
-
-  const handleViewUser = () => {
-    router.push(`/user/view/${data.userId}`); 
-  };
-
-  
+//   const assignTask = () => {
+//     // Logic to assign task
+//     router.push(`/complaint-management/assignTask/${data.userId}`);
+//   };
 
   return (
     <>
@@ -54,23 +53,18 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
+        {/* <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
-         
-          <DropdownMenuItem onClick={handleEditUser}>
-            <Edit className="mr-2 h-4 w-4" /> Edit User Details
+          <DropdownMenuItem onClick={viewBid}>
+            <Eye className="mr-2 h-4 w-4" /> View Bid Details
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleViewUser}>
-            <Eye className="mr-2 h-4 w-4" /> View User
+          <DropdownMenuItem onClick={assignTask}>
+            <UserCheck className="mr-2 h-4 w-4" /> Mannual Assign Bid
           </DropdownMenuItem>
-          {/* <DropdownMenuItem onClick={handleAssignEmployee}>
-            <UserCheck className="mr-2 h-4 w-4" /> Assign Employee
-          </DropdownMenuItem> */}
-          <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" /> Deactivate User
+          <DropdownMenuItem onClick={assignTask}>
+            <Trash className="mr-2 h-4 w-4" /> Mannual Delete Bid
           </DropdownMenuItem>
-        </DropdownMenuContent>
+        </DropdownMenuContent> */}
       </DropdownMenu>
     </>
   );
