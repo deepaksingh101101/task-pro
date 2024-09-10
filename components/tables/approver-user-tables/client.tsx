@@ -19,15 +19,15 @@ export const ApproverUserClient: React.FC = () => {
   const filters = [
     {
       label: 'Account Status',
-      subOptions: ['Active', 'In Active', 'All Users'],
+      subOptions: ['Active', 'Inactive'],
     },
     {
-      label: 'Payment Type',
-      subOptions: ['Credit/Debit', 'UPI', 'Net Banking'],
+      label: 'Verification Status',
+      subOptions: ['Verified', 'Pending'],
     },
     {
-      label: 'Subscription Type',
-      subOptions: ['Trial', 'Weekly', 'Monthly', 'Fortnightly', 'Bi Weekly'],
+      label: 'Activity Status',
+      subOptions: ['Active', 'Inactive'],
     },
   ];
 

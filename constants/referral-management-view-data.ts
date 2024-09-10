@@ -13,7 +13,7 @@ interface ReferralDetail {
     referredBy: ReferralDetail;
     referredTo: ReferralDetail;
     referredDate: string;
-    referredStatus: 'Subscription Purchased' | 'Not Purchased';
+    referredStatus: 'Registered' | 'Not Registered';
   }
   
   // Sample data for the referral management system
@@ -35,7 +35,7 @@ interface ReferralDetail {
         expired: false
       },
       referredDate: "25/Mar/2024",
-      referredStatus: 'Subscription Purchased'
+      referredStatus: 'Registered'
     },
     {
       id: 2,
@@ -54,6 +54,6 @@ interface ReferralDetail {
         expired: false
       },
       referredDate: "25/Jan/2024",
-      referredStatus: 'Not Purchased'
+      referredStatus: 'Not Registered'
     }
   ];
