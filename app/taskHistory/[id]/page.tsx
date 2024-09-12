@@ -1,17 +1,16 @@
 import BreadCrumb from '@/components/breadcrumb';
 import MainLayout from '@/components/layout/main-layout';
-import { ViewHistoryClient } from '@/components/tables/viewHistory-table/client';
+import { TaskHistoryClient } from '@/components/tables/taskHistory-table/client';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-const breadcrumbItems = [{ title: 'History', link: '/user/history' }];
+const breadcrumbItems = [{ title: 'History', link: '/user/taskHistory' }];
 export default function page() {
   return (
-    <MainLayout meta={{ title: 'View Histrory' }}>
-
+    <MainLayout meta={{ title: 'Task Histrory' }}>
     <ScrollArea className="h-full">
       <div className="flex-1 space-y-4 min-h-screen p-4 pt-6 md:p-8">
         <BreadCrumb items={breadcrumbItems} />
-        <ViewHistoryClient/>
+        <TaskHistoryClient/>
       </div>
     </ScrollArea>
     </MainLayout>

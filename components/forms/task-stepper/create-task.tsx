@@ -61,7 +61,9 @@ const taskFormSchema = z.object({
   industryExperienceApprover: z.number().optional(),
   timeAvailability:  z.enum(['6-8am', '8-2pm', '4-9pm']).optional(),
   time: z.enum(['Full-Time', 'Part-Time']).optional(),
-  immediateAvailability: z.enum(['Yes', 'No']).optional()
+  immediateAvailability: z.enum(['Yes', 'No']).optional(),
+  annualIncomeProfessional: z.number(),
+  annualIncomeApprover: z.number()
 });
 
 export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEnabled}) => {
@@ -115,7 +117,9 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
       industryExperienceApprover: undefined,
       timeAvailability: undefined,
       time: undefined,
-      immediateAvailability: undefined
+      immediateAvailability: undefined,
+      annualIncomeProfessional: undefined,
+      annualIncomeApprover: undefined
     }
   });
 
@@ -421,6 +425,19 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
           <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
             <h2 className="text-xl font-semibold  bg-gray-100">Geographic Criteria</h2>
             <div className="w-full gap-8 md:grid md:grid-cols-2">
+            <Controller
+                control={form.control}
+                name="pincode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Pincode</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.pincode?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+              />
               <Controller
                 control={form.control}
                 name="address"
@@ -463,19 +480,6 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                 )}
               />
 
-              <Controller
-                control={form.control}
-                name="pincode"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Pincode</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={isEnabled || loading} />
-                    </FormControl>
-                    <FormMessage>{errors.pincode?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
 
               <Controller
                 control={form.control}
@@ -698,6 +702,19 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                   </FormItem>
                 )}
 />
+<Controller
+                 control={form.control}
+                    name="annualIncomeProfessional"
+                  render={({ field }) => (
+                <FormItem>
+                 <FormLabel>Annual Income</FormLabel>
+             <FormControl>
+                <Input {...field} disabled={isEnabled || loading} />
+                </FormControl>
+             <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+    </FormItem>
+  )}
+/>
  </div>
           </div>
           <div className="space-y-4 ">
@@ -742,6 +759,19 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                   </FormItem>
                 )}
 />
+<Controller
+                 control={form.control}
+                    name="annualIncomeApprover"
+                  render={({ field }) => (
+                <FormItem>
+                 <FormLabel>Annual Income</FormLabel>
+             <FormControl>
+                <Input {...field} disabled={isEnabled || loading} />
+                </FormControl>
+             <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+    </FormItem>
+  )}
+/>
  </div>
  </div>
   
@@ -763,6 +793,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                 { value: '6-8am', label: '6-8 am' },
                 { value: '8-2pm', label: '8-2 pm' },
                 { value: '4-9pm', label: '4-9 pm' },
+                { value: 'All Day', label: 'All Day'}
               ]}
               isDisabled={isEnabled || loading}
             />

@@ -29,6 +29,10 @@ export const  ProfessionalUserClient: React.FC = () => {
       label: 'Activity Status',
       subOptions: ['Active', 'Inactive'],
     },
+    {
+      label: 'City',
+      subOptions: ['Delhi', 'Jharkhand' , 'Karnatka'],
+    },
   ];
 
   const handleSearch = (searchValue: string) => {

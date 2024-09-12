@@ -99,6 +99,12 @@ export const columns: ColumnDef<UserManagement>[] = [
       </div>
     ),
   },
+
+  {
+    accessorKey: 'city', 
+    header: 'City',
+   
+  },
   {
     accessorKey: 'roleAssignmentDate',
     header: 'Role Assignment Date',

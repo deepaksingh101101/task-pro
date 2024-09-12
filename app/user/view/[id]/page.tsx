@@ -5,6 +5,7 @@ import MainLayout from '@/components/layout/main-layout';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { UserManagement } from '@/constants/user-management-data';
 const breadcrumbItems = [{ title: 'View', link: '/dashboard/view' }];
 
 export default function Page() {
@@ -24,7 +25,7 @@ export default function Page() {
 
   const [walletAmount, setWalletAmount] = useState<number | null>(null);
   const [isWalletVisible, setIsWalletVisible] = useState(false); 
-
+ 
   const router = useRouter();
 
    const handleShowWallet = () => {
@@ -38,11 +39,16 @@ export default function Page() {
       setWalletAmount(null);
     }
   };
-  const handleViewHistory = () => {
-    router.push('/viewHistory/${data.userId}'); 
-    console.log('View History clicked');
-    // You can use a router to navigate to a history page
-    // router.push('/dashboard/history');
+  const handleWalletHistory = () => {
+ 
+    router.push(`/viewHistory/${initialData.userId}`); 
+    console.log('Wallet History clicked');
+    
+  };
+  const handleTaskHistory = () => {
+    router.push(`/taskHistory/${initialData.userId}`); 
+    console.log('Task History clicked');
+    
   };
 
   return (
@@ -68,10 +74,16 @@ export default function Page() {
         )}
 
             <button
-              onClick={handleViewHistory}
+              onClick={handleTaskHistory}
               className="px-4 py-2 mt-4 bg-red-500 text-white rounded-md"
             >
-              View History
+              View Task History
+            </button>
+            <button
+              onClick={handleWalletHistory}
+              className="px-4 py-2 mt-4 bg-yellow-500 text-white rounded-md"
+            >
+              View Wallet History
             </button>
           </div>
         </div>

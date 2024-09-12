@@ -100,6 +100,11 @@ export const columns: ColumnDef<UserManagement>[] = [
     ),
   },
   {
+    accessorKey: 'city', 
+    header: 'City',
+   
+  },
+  {
     accessorKey: 'roleAssignmentDate',
     header: 'Role Assignment Date',
   },
