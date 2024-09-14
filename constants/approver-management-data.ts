@@ -1,6 +1,6 @@
 import { format, parseISO } from 'date-fns';
 
-export type UserManagement = {
+export type ApproverManagement = {
   userId: number;
   firstName: string;
   lastName: string;
@@ -14,6 +14,8 @@ export type UserManagement = {
   activityStatus: string;
   rewardsPoints: number;
   accountStatus: 'Active' | 'Inactive';
+  taskStatus: string;
+  paymentStatus: string;
 };
 
 // Helper function to format dates
@@ -21,7 +23,7 @@ const formatDate = (dateString: string) => {
   return format(parseISO(dateString), 'dd MMM yyyy');
 };
 
-export const userManagementData: UserManagement[] = [
+export const ApproverManagementData: ApproverManagement[] = [
   {
     userId: 1,
     firstName: 'Arya',
@@ -36,6 +38,8 @@ export const userManagementData: UserManagement[] = [
     activityStatus: 'Active',
     rewardsPoints: 150,
     accountStatus: 'Active',
+    taskStatus: 'Not Approved',
+    paymentStatus: 'Not Elligible'
   },
   {
     userId: 2,
@@ -51,6 +55,8 @@ export const userManagementData: UserManagement[] = [
     activityStatus: 'Inactive',
     rewardsPoints: 80,
     accountStatus: 'Inactive',
+    taskStatus: 'Listed',
+    paymentStatus: 'Pending'
   },
   {
     userId: 3,
@@ -61,11 +67,13 @@ export const userManagementData: UserManagement[] = [
     society: 'Palm Gardens',
     city: 'Mumbai',
     roleAssignmentDate: formatDate('2023-05-20'),
-    verificationStatus: 'Verified',
+    verificationStatus: 'Rejected',
     lastLogin: formatDate('2023-08-25'),
     activityStatus: 'Active',
     rewardsPoints: 200,
     accountStatus: 'Active',
+    taskStatus: 'Completed',
+    paymentStatus: 'Under Process'
   },
   {
     userId: 4,
@@ -81,7 +89,10 @@ export const userManagementData: UserManagement[] = [
     activityStatus: 'Inactive',
     rewardsPoints: 60,
     accountStatus: 'Inactive',
+    taskStatus: 'Completed',
+    paymentStatus: 'Paid'
   },
+
   {
     userId: 5,
     firstName: 'Vikash',
@@ -96,6 +107,8 @@ export const userManagementData: UserManagement[] = [
     activityStatus: 'Active',
     rewardsPoints: 120,
     accountStatus: 'Active',
+     taskStatus: 'Assigned',
+    paymentStatus: 'Pending'
   },
   {
     userId: 6,
@@ -106,10 +119,12 @@ export const userManagementData: UserManagement[] = [
     society: 'Ireo Skyon',
     city: 'Delhi',
     roleAssignmentDate: formatDate('2023-02-25'),
-    verificationStatus: 'Pending',
+    verificationStatus: 'Rejected',
     lastLogin: formatDate('2023-08-30'),
     activityStatus: 'Inactive',
     rewardsPoints: 40,
     accountStatus: 'Inactive',
+     taskStatus: 'Completed',
+    paymentStatus: 'Unsuccessful'
   },
 ];

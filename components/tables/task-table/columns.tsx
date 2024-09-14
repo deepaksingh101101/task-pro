@@ -28,11 +28,7 @@ export const columns: ColumnDef<TaskManagement>[] = [
     header: 'Task ID',
     cell: ({ row }) => <span className="text-red-600 font-bold px-1" style={{ borderRadius: '50%' }}>{row.original.taskId}</span>,
   },
-  {
-    accessorKey: 'title',
-    header: 'Title',
-    cell: ({ row }) => <span>{row.original.title}</span>,
-  },
+  
   {
     accessorKey: 'taskName',
     header: 'Task Name',
@@ -68,7 +64,11 @@ export const columns: ColumnDef<TaskManagement>[] = [
   {
     accessorKey: 'maximumCostAssigned',
     header: 'Maximum Cost Assigned',
-    cell: ({ row }) => <span>₹{row.original.maximumCostAssigned}</span>,
+    cell: ({ row }) => (
+      <div className="flex justify-center">
+        <span>₹{row.original.maximumCostAssigned}</span>
+      </div>
+    ),
   },
   {
     accessorKey: 'biddingTime',
@@ -138,15 +138,43 @@ export const columns: ColumnDef<TaskManagement>[] = [
     header: 'Country',
     cell: ({ row }) => <span>{row.original.country}</span>,
   },
-  
+  {
+    accessorKey: 'taskStatus',
+    header: 'Task Status',
+    cell: ({ row }) => (
+      <div
+        style={{ borderRadius: '20px' }}
+        className={`flex items-center px-2 py-1 ${
+          row.original.taskStatus === 'Not Approved' ? 'bg-red-500' 
+        : row.original.taskStatus === 'Listed' ? 'bg-yellow-400' 
+        : row.original.taskStatus === 'Completed' ? 'bg-orange-400' 
+        : 'bg-green-400'
+        }`}
+      >
+       {
+  (row.original.taskStatus === 'Not Approved') ? (
+    <X width={16} height={16} className="text-red-900 mr-2" />
+  ) : (row.original.taskStatus === 'Listed') ? (
+    <Check width={16} height={16} className="text-yellow-800 mr-2" />
+  ) : (row.original.taskStatus === 'Completed') ? (
+    <Check width={16} height={16} className="text-orange-800 mr-2" />
+  ) : (
+    <Check width={16} height={16} className="text-green-800 mr-2" />
+  )
+}
+        <span className="text-black bold">{row.original.taskStatus}</span>
+      </div>
+    ),
+  },
   {
     accessorKey: 'rewards', 
     header: 'Rewards Points',
     cell: ({ row }) => (
-        <div className='flex items-center'>
+        <div className='flex justify-center'>
             <Award className="text-yellow-500 mr-2" width={25} height={29} />
             <span>{row.original.rewards}</span> 
         </div>
+       
     )
   },
   {

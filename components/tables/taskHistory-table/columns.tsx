@@ -28,11 +28,7 @@ export const columns: ColumnDef<TaskHistory>[] = [
     header: 'Task ID',
     cell: ({ row }) => <span className="text-red-600 font-bold px-1" style={{ borderRadius: '50%' }}>{row.original.taskId}</span>,
   },
-  {
-    accessorKey: 'title',
-    header: 'Title',
-    cell: ({ row }) => <span>{row.original.title}</span>,
-  },
+ 
   {
     accessorKey: 'taskName',
     header: 'Task Name',
@@ -44,11 +40,7 @@ export const columns: ColumnDef<TaskHistory>[] = [
     cell: ({ row }) => <span>{row.original.taskType}</span>,
   },
   
-  {
-    accessorKey: 'assignedTo',
-    header: 'Assigned To',
-    cell: ({ row }) => <span>{row.original.assignedTo}</span>,
-  },
+ 
   {
     accessorKey: 'assignedBy',
     header: 'Assigned By',
@@ -64,8 +56,8 @@ export const columns: ColumnDef<TaskHistory>[] = [
   },
 
   
-  // {
-  //   id: 'actions',
-  //   cell: ({ row }) => <CellAction data={row.original} />,
-  // },
+  {
+    id: 'actions',
+    cell: ({ row }) => <CellAction data={row.original} />,
+  },
 ];

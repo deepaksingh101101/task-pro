@@ -9,12 +9,13 @@ import { Separator } from '@/components/ui/separator';
 import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { columns } from './columns';
-import { UserManagement, userManagementData } from '@/constants/user-management-data';
+
+import { ApproverManagement, ApproverManagementData } from '@/constants/approver-management-data';
 
 export const ApproverUserClient: React.FC = () => {
   const router = useRouter();
-  const initialData: UserManagement[] = userManagementData;
-  const [data, setData] = useState<UserManagement[]>(initialData);
+  const initialData: ApproverManagement[] = ApproverManagementData;
+  const [data, setData] = useState<ApproverManagement[]>(initialData);
 
   const filters = [
     {
@@ -23,7 +24,7 @@ export const ApproverUserClient: React.FC = () => {
     },
     {
       label: 'Verification Status',
-      subOptions: ['Verified', 'Pending'],
+      subOptions: ['Verified', 'Pending', 'Rejected'],
     },
     {
       label: 'Activity Status',

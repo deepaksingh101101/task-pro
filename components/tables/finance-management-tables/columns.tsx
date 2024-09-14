@@ -31,6 +31,10 @@ export const columns: ColumnDef<Finance>[] = [
     cell: ({ row }) => <span>{row.index + 1}</span>, 
   },
   {
+    accessorKey: 'taskId',
+    header: 'Task ID',
+  },
+  {
     accessorKey: 'userId',
     header: 'User ID',
   },
@@ -47,16 +51,13 @@ export const columns: ColumnDef<Finance>[] = [
   {
     accessorKey: 'time',
     header: 'Time',
-    cell: ({ row }) => <span>{new Date(row.original.time).toLocaleTimeString()}</span>, // Format time
+    cell: ({ row }) => <span>{row.original.time}</span>, 
   },
   {
     accessorKey: 'method',
     header: 'Method',
   },
-  {
-    accessorKey: 'taskId',
-    header: 'Task ID',
-  },
+ 
   {
     accessorKey: 'userType',
     header: 'User Type',

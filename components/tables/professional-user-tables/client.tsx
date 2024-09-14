@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
-import { UserManagement, userManagementData } from '@/constants/user-management-data';
+import { ProfessionalManagement, ProfessionalManagementData } from '@/constants/professional-management-data';
 
 import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -13,8 +13,8 @@ import { columns } from './columns';
 
 export const  ProfessionalUserClient: React.FC = () => {
   const router = useRouter();
-  const initialData: UserManagement[] = userManagementData;
-  const [data, setData] = useState<UserManagement[]>(initialData);
+  const initialData: ProfessionalManagement[] = ProfessionalManagementData;
+  const [data, setData] = useState<ProfessionalManagement[]>(initialData);
 
   const filters = [
     {
@@ -23,7 +23,7 @@ export const  ProfessionalUserClient: React.FC = () => {
     },
     {
       label: 'Verification Status',
-      subOptions: ['Verified', 'Pending'],
+      subOptions: ['Verified', 'Pending', 'Rejected'],
     },
     {
       label: 'Activity Status',

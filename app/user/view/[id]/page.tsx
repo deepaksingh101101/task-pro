@@ -5,7 +5,7 @@ import MainLayout from '@/components/layout/main-layout';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { UserManagement } from '@/constants/user-management-data';
+import { ProfessionalManagement } from '@/constants/professional-management-data';
 const breadcrumbItems = [{ title: 'View', link: '/dashboard/view' }];
 
 export default function Page() {
@@ -64,7 +64,7 @@ export default function Page() {
           onClick={handleShowWallet}
           className="px-4 py-2 mt-4 bg-orange-500 text-white rounded-md "
         >
-          {isWalletVisible ? 'Hide Wallet Details' : 'Show Wallet Details'}
+          {isWalletVisible ? 'Wallet Amount' : 'Wallet Amount'}
         </button>
 
         {walletAmount !== null && (

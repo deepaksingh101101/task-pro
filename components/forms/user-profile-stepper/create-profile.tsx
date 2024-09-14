@@ -43,6 +43,7 @@ const FormSchema = z.object({
   firstName: z.string().min(1, "First Name is required"),
   lastName: z.string().min(1, "Last Name is required"),
   contact: z.string().min(1, "Contact is required"),
+  email: z.string().min(1, "Email is required"),
   address: z.string().min(1, "Address is required"),
   roleAssignmentDate: z.string().min(1, "Role Assignment Date is required"),
   verificationStatus: z.string().min(1, "Verification Status is required"),
@@ -72,17 +73,17 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
     resolver: zodResolver(FormSchema),
     mode: 'onChange',
     defaultValues: initialData || {
-      userId: '',                // Corresponds to the userId in the schema
-      firstName: '',             // Corresponds to the firstName in the schema
-      lastName: '',              // Corresponds to the lastName in the schema
-      contact: '',               // Corresponds to the contact in the schema
-      address: '',               // Corresponds to the address in the schema
-      roleAssignmentDate: '',    // Corresponds to roleAssignmentDate in the schema
-      verificationStatus: '',    // Corresponds to verificationStatus in the schema
-      lastLogin: '',             // Corresponds to lastLogin in the schema
-      activityStatus: '',        // Corresponds to activityStatus in the schema
-      rewardsPoints: 0,          // Corresponds to rewardsPoints in the schema
-      accountStatus: '',         // Corresponds to accountStatus in the schema
+      userId: '',               
+      firstName: '',            
+      lastName: '', 
+      email: '',           
+      contact: '',            
+      address: '',             
+      roleAssignmentDate: '',  
+      verificationStatus: '',  
+      lastLogin: '',           
+      rewardsPoints: 0,        
+      accountStatus: '',       
     },
   });
 
@@ -233,19 +234,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
           className="w-full space-y-8"
         >
           <div className="relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3">
-            <FormField
-              control={form.control}
-              name="userId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>User ID</FormLabel>
-                  <FormControl>
-                    <Input disabled={isEnabled || loading} placeholder="Enter User ID" {...field} />
-                  </FormControl>
-                  <FormMessage>{errors.userId?.message}</FormMessage>
-                </FormItem>
-              )}
-            />
+          
             <FormField
               control={form.control}
               name="firstName"
@@ -253,7 +242,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input disabled={isEnabled || loading} placeholder="John" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="Ridhi" {...field} />
                   </FormControl>
                   <FormMessage>{errors.firstName?.message}</FormMessage>
                 </FormItem>
@@ -266,7 +255,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input disabled={isEnabled || loading} placeholder="Doe" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="Mishra" {...field} />
                   </FormControl>
                   <FormMessage>{errors.lastName?.message}</FormMessage>
                 </FormItem>
@@ -280,6 +269,19 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                   <FormLabel>Contact</FormLabel>
                   <FormControl>
                     <Input disabled={isEnabled || loading} placeholder="123-456-7890" {...field} />
+                  </FormControl>
+                  <FormMessage>{errors.contact?.message}</FormMessage>
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input disabled={isEnabled || loading} placeholder="abc@gmail.com" {...field} />
                   </FormControl>
                   <FormMessage>{errors.contact?.message}</FormMessage>
                 </FormItem>

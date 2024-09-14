@@ -9,13 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { UserManagement } from '@/constants/user-management-data';
+import { ApproverManagement } from '@/constants/approver-management-data';
 import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: UserManagement;
+  data: ApproverManagement;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {

@@ -9,14 +9,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { ViewHistory } from '@/constants/viewHistory-data';
+import { TaskHistory } from '@/constants/task-history-data';
 
-import { MoreHorizontal, Eye, UserCheck, Trash } from 'lucide-react';
+import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck, Table } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: ViewHistory;
+  data: TaskHistory;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -28,16 +28,27 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     // Your confirm logic here
   };
 
-//   const viewBid = () => {
-//     // Logic to view bid
-//     router.push(`/complaint-management/viewBid/${data.userId}`);
-//   };
+  const editTask = () => {
+    router.push(`/task/edit/${data.taskId}`); 
+  };
 
-//   const assignTask = () => {
-//     // Logic to assign task
-//     router.push(`/complaint-management/assignTask/${data.userId}`);
-//   };
+  const viewTask = () => {
+    router.push(`/task/view/${data.taskId}`); 
+  };
 
+  const updateStatus = () => {
+    router.push(`/order/${data.taskId}`); 
+  };
+
+  const viewBids= () => {
+    router.push(`/bidding/table/${data.taskId}`); 
+  };
+
+  const biddingTable = () => {
+    router.push(`/bidding/table/${data.taskId}`); 
+  };
+
+ 
   return (
     <>
       <AlertModal
@@ -53,7 +64,27 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
-       
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem onClick={editTask}>
+            <Edit className="mr-2 h-4 w-4" />  Edit task
+
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={viewTask}>
+            <Eye className="mr-2 h-4 w-4" /> View Task
+          </DropdownMenuItem>
+          {/* <DropdownMenuItem onClick={updateStatus}>
+            <UserCheck className="mr-2 h-4 w-4" /> Change Status
+
+          </DropdownMenuItem> */}
+          <DropdownMenuItem onClick={viewBids}>
+            <Eye className="mr-2 h-4 w-4" /> View Bids
+
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={biddingTable}>                               
+            <Table className="mr-2 h-4 w-4" /> Biding Table
+          </DropdownMenuItem>
+        </DropdownMenuContent>
       </DropdownMenu>
     </>
   );
