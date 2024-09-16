@@ -99,7 +99,7 @@ export default function page() {
     {
       id: 4,
       title: 'Total Approvers',
-      count: 1024,
+      count: 24,
       description: '10 Newly added',
       imageSrc: customerImage,
     },
