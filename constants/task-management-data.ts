@@ -10,7 +10,7 @@ export interface TaskManagement {
   taskType: string;
   biddingTime: TimeRanges;
   dueDate: Date;
-  
+  taskStatus: string;
   rewards: number;
   subtasks: string;
   feedback: string;
@@ -47,6 +47,7 @@ export const TaskManagementData: TaskManagement[] = [
     rewards: 50,
     subtasks: 'Complete the survey and submit feedback.',
     feedback: 'Survey completed successfully.',
+    taskStatus: 'Progress',
   },
   {
     taskId: 202,
@@ -68,6 +69,7 @@ export const TaskManagementData: TaskManagement[] = [
     rewards: 60,
     subtasks: 'Inspect and document product quality.',
     feedback: 'Inspection in progress.',
+    taskStatus: 'Listed',
   },
   {
     taskId: 203,
@@ -89,6 +91,7 @@ export const TaskManagementData: TaskManagement[] = [
     rewards: 70,
     subtasks: 'Complete training modules and assessments.',
     feedback: 'Training session scheduled for next week.',
+    taskStatus: 'Completed',
   },
   {
     taskId: 204,
@@ -110,7 +113,8 @@ export const TaskManagementData: TaskManagement[] = [
     rewards: 80,
     subtasks: 'Complete performance reviews and submit reports.',
     feedback: 'Pending reviews, to be completed by end of month.',
-  },
+    taskStatus: 'Completed',
+     },
   {
     taskId: 205,
     title: 'Market Research Study',
@@ -131,5 +135,6 @@ export const TaskManagementData: TaskManagement[] = [
     rewards: 90,
     subtasks: 'Complete market research and submit analysis report.',
     feedback: 'Research in progress, preliminary findings are promising.',
+    taskStatus: 'Assigned',
   }
 ];

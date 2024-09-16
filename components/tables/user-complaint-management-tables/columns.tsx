@@ -31,7 +31,7 @@ export const columns: ColumnDef<ComplaintManagementUser>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'name'
+    header: 'Name'
   },
   {
     accessorKey: 'complaintType',

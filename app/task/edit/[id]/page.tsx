@@ -4,43 +4,58 @@ import { CreateSubscriptionOne } from '@/components/forms/subscription-stepper/c
 import MainLayout from '@/components/layout/main-layout';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-const breadcrumbItems = [{ title: 'Create Task', link: '/dashboard/task' }];
+const breadcrumbItems = [{ title: 'Edit Task', link: '/dashboard/task' }];
 export default function page() {
   const initialData = {
     taskId: 'T001',
-    title: 'Market Research',
-    taskName: 'Conduct Market Research',
+    title: 'Market Research Survey',
+    taskName: 'Conduct In-depth Market Research',
     taskType: 'Survey',
-    dueDate: new Date('2024-09-15'),
-    assignedTo: 'John Doe',
-    assignedBy: 'Jane Smith',
-    assignedDate: new Date('2024-09-01'),
-    Status: 'Active',
-    maximumCostAssigned: 500,
+    dueDateProfessional: new Date('2024-09-15'),
+    dueDateApprover: new Date('2024-09-18'),
+    assignedToProfessional: 'Ridhi',
+    assignedByProfessional: 'Arya Singh',
+    assignedToApprover: 'Ridhi',
+    assignedByApprover: 'Michael Johnson',
+    assignedDateProfessional: new Date('2024-09-01'),
+    assignedDateApprover: new Date('2024-09-02'),
+    completedDateProfessional: new Date('2024-09-14'),
+    completedDateApprover: new Date('2024-09-17'),
+    Status: 'Completed',
+    maximumCostAssignedProfessional: 500,
+    maximumCostAssignedApprover: 700,
     rewards: 50,
-    feedback: 'Well done',
-    description: 'Research on consumer behavior in urban areas',
-    subtasks: ['Design Survey', 'Collect Data', 'Analyze Results'],
-    address: '123 Main St',
+    quantity: 100, // Example quantity for survey respondents
+    feedbackProfessional: 'Professional completed task excellently',
+    feedbackApprover: 'Approver gave good feedback',
+    description: 'Conduct comprehensive research on market trends in urban areas.',
+    subtasks: ['Prepare Survey', 'Collect Data', 'Analyze Trends', 'Report Findings'],
+    address: '456 Market St',
     city: 'New York',
-    pincode: '10001',
+    pincode: '10002',
     country: 'USA',
     state: 'NY',
     tag: 'Urban',
-    ageRange: '26-35',
-    gender: 'Male',
     nationality: ['American'],
+    ageRange: '26-35',
     language: 'English',
+    gender: 'Male',
+    occupation: 'Market Analyst',
+    educationLevel: 'Bachelor’s Degree',
+    value: 200, // Example for the value field
     taskCompletionHistoryProfessional: 10,
-  taskRatingsProfessional: 4.5,
-  industryExperienceProfessional: 5,
-  taskCompletionHistoryApprover: 24,
-  taskRatingsApprover: 3.5,
-  industryExperienceApprover: 4,
+    taskRatingsProfessional: 4.5,
+    industryExperienceProfessional: 5,
+    taskCompletionHistoryApprover: 24,
+    taskRatingsApprover: 3.8,
+    industryExperienceApprover: 4,
     timeAvailability: '8-2pm',
     time: 'Part-Time',
-    immediateAvailability: 'Yes'
+    immediateAvailability: 'Yes',
+    annualIncomeProfessional: 50000,
+    annualIncomeApprover: 60000,
   };
+  
   
   return (
     <MainLayout meta={{ title: 'Edit Task' }}>

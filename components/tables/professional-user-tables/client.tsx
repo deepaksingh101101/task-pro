@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { DataTable } from '@/components/ui/data-table';
 import { Heading } from '@/components/ui/heading';
 import { Separator } from '@/components/ui/separator';
-import { UserManagement, userManagementData } from '@/constants/user-management-data';
+import { ProfessionalManagement, ProfessionalManagementData } from '@/constants/professional-management-data';
 
 import { Plus } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -13,21 +13,25 @@ import { columns } from './columns';
 
 export const  ProfessionalUserClient: React.FC = () => {
   const router = useRouter();
-  const initialData: UserManagement[] = userManagementData;
-  const [data, setData] = useState<UserManagement[]>(initialData);
+  const initialData: ProfessionalManagement[] = ProfessionalManagementData;
+  const [data, setData] = useState<ProfessionalManagement[]>(initialData);
 
   const filters = [
     {
       label: 'Account Status',
-      subOptions: ['Active', 'In Active', 'All Users'],
+      subOptions: ['Active', 'Inactive'],
     },
     {
-      label: 'Payment Type',
-      subOptions: ['Credit/Debit', 'UPI', 'Net Banking'],
+      label: 'Verification Status',
+      subOptions: ['Verified', 'Pending', 'Rejected'],
     },
     {
-      label: 'Subscription Type',
-      subOptions: ['Trial', 'Weekly', 'Monthly', 'Fortnightly', 'Bi Weekly'],
+      label: 'Activity Status',
+      subOptions: ['Active', 'Inactive'],
+    },
+    {
+      label: 'City',
+      subOptions: ['Delhi', 'Jharkhand' , 'Karnatka'],
     },
   ];
 
@@ -38,17 +42,17 @@ export const  ProfessionalUserClient: React.FC = () => {
     setData(filteredData);
   };
 
-  const handleSort = (sortBy: string, sortOrder: 'asc' | 'desc') => {
-    // Example: Sorting by first name
-    const sortedData = [...data].sort((a, b) => {
-      if (sortOrder === 'asc') {
-        return a.subscriptionType.localeCompare(b.subscriptionType);
-      } else {
-        return b.subscriptionType.localeCompare(a.subscriptionType);
-      }
-    });
-    setData(sortedData);
-  };
+  // const handleSort = (sortBy: string, sortOrder: 'asc' | 'desc') => {
+  //   // Example: Sorting by first name
+  //   const sortedData = [...data].sort((a, b) => {
+  //     if (sortOrder === 'asc') {
+  //       return a.subscriptionType.localeCompare(b.subscriptionType);
+  //     } else {
+  //       return b.subscriptionType.localeCompare(a.subscriptionType);
+  //     }
+  //   });
+  //   setData(sortedData);
+  // };
 
   return (
     <>

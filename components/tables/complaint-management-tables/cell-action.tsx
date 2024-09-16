@@ -66,12 +66,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-          {/* <DropdownMenuItem onClick={handleRegisterNewSubscription}>
-            <UserPlus className="mr-2 h-4 w-4" /> Create New Subscription
-          </DropdownMenuItem> */}
-          <DropdownMenuItem onClick={editComplaintMessage}>
-            <Edit className="mr-2 h-4 w-4" /> Edit Complaint
-          </DropdownMenuItem>
+        
+       
           {/* <DropdownMenuItem onClick={viewComplaint}>
             <Eye className="mr-2 h-4 w-4" /> View Complaint 
           </DropdownMenuItem> */}

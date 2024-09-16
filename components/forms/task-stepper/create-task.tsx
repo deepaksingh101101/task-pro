@@ -28,7 +28,10 @@ const taskFormSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   taskName: z.string().min(1, 'Task Name is required'),
   taskType: z.string().min(1, 'Task Type is required'),
-  dueDate: z.date({
+  dueDateProfessional: z.date({
+    required_error: "Due Date is required.",
+  }),
+  dueDateApprover: z.date({
     required_error: "Due Date is required.",
   }),
   assignedTo: z.string().min(1, 'Assigned To is required'),
@@ -37,8 +40,11 @@ const taskFormSchema = z.object({
     required_error: "Assigned Date is required.",
   }),
   Status: z.string().min(1, 'Status is required'),
-  maximumCostAssigned: z.number().positive('Maximum Cost Assigned must be greater than zero'),
+ 
+  maximumCostAssignedProfessional: z.number().positive('Maximum Cost Assigned must be greater than zero'),
+  maximumCostAssignedApprover: z.number().positive('Maximum Cost Assigned must be greater than zero'),
   rewards: z.number().optional(),
+  quantity: z.number().optional(),
   feedback: z.string().optional(),
   description: z.string().optional(),
   subtasks: z.array(z.string()).optional(),
@@ -52,7 +58,6 @@ const taskFormSchema = z.object({
   gender:  z.enum(['Male', 'Female', 'Other']).optional(),
   nationality: z.array(z.string()).optional(),
   language: z.string().optional(),
-  
   taskCompletionHistoryProfessional: z.number().optional(),
   taskRatingsProfessional: z.number().optional(),
   industryExperienceProfessional: z.number().optional(),
@@ -61,7 +66,10 @@ const taskFormSchema = z.object({
   industryExperienceApprover: z.number().optional(),
   timeAvailability:  z.enum(['6-8am', '8-2pm', '4-9pm']).optional(),
   time: z.enum(['Full-Time', 'Part-Time']).optional(),
-  immediateAvailability: z.enum(['Yes', 'No']).optional()
+  immediateAvailability: z.enum(['Yes', 'No']).optional(),
+  annualIncomeProfessional: z.number(),
+  annualIncomeApprover: z.number()
+
 });
 
 export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEnabled}) => {
@@ -69,9 +77,12 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? 'Edit Task' : 'Create New Task'  ;
-  const description = initialData ? 'Edit the Task details.' : 'To create a new Task, fill in the required information.';
-  const action = initialData ? 'Save changes' : 'Create';
+  const title = initialData && isEnabled ? "View Task" : initialData ? "Edit Task" : "Create New Task";
+  const description = initialData && isEnabled 
+    ? "View the Task details." : initialData ? "Edit the Task details."
+    : "To create a new Task, fill in the required information.";
+ 
+  const action = initialData ? 'Save changes' : 'Next';
 
   const form = useForm({
     resolver: zodResolver(taskFormSchema),
@@ -81,14 +92,24 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
       title: '',
       taskName: '',
       taskType: '',
-      dueDate: new Date(),
-      assignedTo: '',
-      assignedBy: '',
-      assignedDate: new Date(),
-      Status: '',
-      maximumCostAssigned: 0,
+      dueDateProfessional: new Date(),
+      dueDateApprover: new Date(),
+      assignedToProfessional: '',
+      assignedByProfessional: '',
+      assignedToApprover: '',
+      assignedByApprover: '',
+      assignedDateProfessional: new Date(),
+      assignedDateApprover: new Date(),
+     completedDateProfessional: new Date(),
+      complatedDateApprover: new Date(),
+      professionalStatus: '',
+      approverStatus: '',
+      maximumCostAssignedProfessional: 0,
+      maximumCostAssignedApprover: 0,
       rewards: undefined,
-      feedback: '',
+      quantity: undefined,
+      feedbackProfessional: '',
+      feedbackApprover: '',
       description: '',
       subtasks: [] as string[],
       address: '',
@@ -96,6 +117,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
       pincode: '',
       country: '',
       state: '',
+      youTubeLink: '',
       tag: undefined,
       nationality: undefined, 
       ageRange: undefined,
@@ -112,7 +134,10 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
       industryExperienceApprover: undefined,
       timeAvailability: undefined,
       time: undefined,
-      immediateAvailability: undefined
+      immediateAvailability: undefined,
+      annualIncomeProfessional: undefined,
+      annualIncomeApprover: undefined
+    
     }
   });
 
@@ -153,10 +178,10 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="w-full space-y-8">
           {/* Task Details Section */}
-          <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
-            <h2 className="text-xl font-semibold  bg-gray-100">Task Details</h2>
+          <div className="space-y-4 border  border-orange-300 p-4 rounded-md">
+            <h2 className="text-xl font-semibold  bg-orange-300">Task Details</h2>
             <div className="w-full gap-8 md:grid md:grid-cols-3">
-              <Controller
+              {/* <Controller
                 control={form.control}
                 name="taskId"
                 render={({ field }) => (
@@ -168,21 +193,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                     <FormMessage>{errors.taskId?.message?.toString()}</FormMessage>
                     </FormItem>
                 )}
-              />
-
-              <Controller
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Title</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={isEnabled || loading} />
-                    </FormControl>
-                    <FormMessage>{errors.title?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
+              /> */}
 
               <Controller
                 control={form.control}
@@ -211,190 +222,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                   </FormItem>
                 )}
               />
-
-              <FormField
-                control={form.control}
-                name="dueDate"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Due Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-[240px] pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "dd MMM yyyy")
-                            ) : (
-                              <span>Pick a date</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage>{errors.dueDate?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
-
-              <Controller
-                control={form.control}
-                name="assignedTo"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Assigned To</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={isEnabled || loading} />
-                    </FormControl>
-                    <FormMessage>{errors.assignedTo?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
-
-              <Controller
-                control={form.control}
-                name="assignedBy"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Assigned By</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={isEnabled || loading} />
-                    </FormControl>
-                    <FormMessage>{errors.assignedBy?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="assignedDate"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Assigned Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "w-[240px] pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "dd MMM yyyy")
-                            ) : (
-                              <span>Pick a date</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage>{errors.assignedDate?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
-
-              <Controller
-                control={form.control}
-                name="Status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Status</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={isEnabled || loading} />
-                    </FormControl>
-                    <FormMessage>{errors.Status?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
-
-              <Controller
-                control={form.control}
-                name="maximumCostAssigned"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Maximum Cost Assigned</FormLabel>
-                    <FormControl>
-                      <Input type="number" {...field} disabled={isEnabled || loading} />
-                    </FormControl>
-                    <FormMessage>{errors.maximumCostAssigned?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
-
-              <Controller
-                control={form.control}
-                name="rewards"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Rewards</FormLabel>
-                    <FormControl>
-                      <Input type="number" {...field} disabled={isEnabled || loading} />
-                    </FormControl>
-                    <FormMessage>{errors.rewards?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
-
-              <Controller
-                control={form.control}
-                name="feedback"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Feedback</FormLabel>
-                    <FormControl>
-                      <Textarea {...field} disabled={isEnabled || loading} />
-                    </FormControl>
-                    <FormMessage>{errors.feedback?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
-
-              <Controller
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description</FormLabel>
-                    <FormControl>
-                      <Textarea {...field} disabled={isEnabled || loading} />
-                    </FormControl>
-                    <FormMessage>{errors.description?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
-
-              <Controller
+  <Controller
                 control={form.control}
                 name="subtasks"
                 render={({ field }) => (
@@ -411,13 +239,82 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                   </FormItem>
                 )}
               />
-              
+   
+<Controller
+                control={form.control}
+                name="rewards"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Rewards</FormLabel>
+                    <FormControl>
+                      <Input type="number" {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.rewards?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+              />
+
+<Controller
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.description?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+              />
+
+<Controller
+                control={form.control}
+                name="quantity"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Task Quantity</FormLabel>
+                    <FormControl>
+                      <Input type="number" {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.rewards?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+              />
+ 
+ <Controller
+                control={form.control}
+                name="youTubeLink"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>YouTube Video </FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.taskName?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+              />
+
             </div>
           </div>
           {/* Address Details Section */}
-          <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
-            <h2 className="text-xl font-semibold  bg-gray-100">Geographic Criteria</h2>
+          <div className="space-y-4 border  border-orange-300 p-4 rounded-md">
+            <h2 className="text-xl font-semibold  bg-orange-300">Geographic Criteria</h2>
             <div className="w-full gap-8 md:grid md:grid-cols-2">
+            <Controller
+                control={form.control}
+                name="pincode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Pincode</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.pincode?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+              />
               <Controller
                 control={form.control}
                 name="address"
@@ -460,19 +357,6 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                 )}
               />
 
-              <Controller
-                control={form.control}
-                name="pincode"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Pincode</FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={isEnabled || loading} />
-                    </FormControl>
-                    <FormMessage>{errors.pincode?.message?.toString()}</FormMessage>
-                  </FormItem>
-                )}
-              />
 
               <Controller
                 control={form.control}
@@ -511,8 +395,8 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
             </div>
           </div>
            {/* Demographic criteria */}
-          <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
-          <h2 className="text-xl font-semibold bg-gray-100">Demographic Criteria</h2>
+          <div className="space-y-4 border  border-orange-300 p-4 rounded-md">
+          <h2 className="text-xl font-semibold bg-orange-300">Demographic Criteria</h2>
   <div className="w-full gap-8 md:grid md:grid-cols-2">
     <Controller
       control={form.control}
@@ -532,7 +416,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
               isDisabled={isEnabled || loading}
             />
           </FormControl>
-          <FormMessage>{errors.ageRange?.message?.toString()}</FormMessage>
+          
         </FormItem>
       )}
     />
@@ -553,7 +437,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
               isDisabled={isEnabled || loading}
             />
           </FormControl>
-          <FormMessage>{errors.gender?.message?.toString()}</FormMessage>
+    
         </FormItem>
       )}
     />
@@ -573,10 +457,12 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                 // Add more nationalities as needed
               ]}
               isDisabled={isEnabled || loading}
-              isMulti
+              
             />
           </FormControl>
-          <FormMessage>{errors.nationality?.message?.toString()}</FormMessage>
+
+          
+         
         </FormItem>
       )}
     />
@@ -599,7 +485,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
               isMulti
             />
           </FormControl>
-          <FormMessage>{errors.language?.message?.toString()}</FormMessage>
+       
         </FormItem>
       )}
     />
@@ -619,10 +505,10 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                 // Add more occupations as needed
               ]}
               isDisabled={isEnabled || loading}
-              isMulti
+              
             />
           </FormControl>
-          <FormMessage>{errors.occupation?.message?.toString()}</FormMessage>
+          
         </FormItem>
       )}
     />
@@ -644,28 +530,28 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
               isDisabled={isEnabled || loading}
             />
           </FormControl>
-          <FormMessage>{errors.educationLevel?.message?.toString()}</FormMessage>
+         
         </FormItem>
       )}
     />
   </div>
           </div>
            {/*Experience-based criteria */}
-          <div className="space-y-4 border  border-gray-300 p-4 rounded-md">
-          <h2 className="text-xl font-semibold bg-gray-100"> Experience-Based Criteria</h2>
+          <div className="space-y-4 border  border-orange-300 p-4 rounded-md">
+         
           <div className="space-y-4 ">
-          <h2 className="text-xl font-semibold"> For Professional</h2>
+          <h2 className="text-xl font-semibold  bg-orange-300"> For Professional</h2>
           <div className="w-full gap-8 md:grid md:grid-cols-2">
  <Controller
                 control={form.control}
                 name="taskCompletionHistoryProfessional"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Task Completion History</FormLabel>
+                    <FormLabel>No of Tasks Completed</FormLabel>
                     <FormControl>
                       <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+                 
                   </FormItem>
                 )}
 />
@@ -678,7 +564,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
              <FormControl>
                 <Input {...field} disabled={isEnabled || loading} />
                 </FormControl>
-             <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+             
     </FormItem>
   )}
 />
@@ -691,14 +577,229 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                     <FormControl>
                       <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+                 
                   </FormItem>
                 )}
 />
+<Controller
+                 control={form.control}
+                    name="annualIncomeProfessional"
+                  render={({ field }) => (
+                <FormItem>
+                 <FormLabel>Annual Income</FormLabel>
+             <FormControl>
+                <Input {...field} disabled={isEnabled || loading} />
+                </FormControl>
+            
+    </FormItem>
+  )}
+/>
+<Controller
+                control={form.control}
+                name="maximumCostAssignedProfessional"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Maximum Cost Assigned</FormLabel>
+                    <FormControl>
+                      <Input type="number" {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                  
+                  </FormItem>
+                )}
+              />
+
+<FormField
+                control={form.control}
+                name="dueDateProfessional"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Due Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                        
+                          <Button
+                            disabled={isEnabled || loading}
+                            placeholder="Select Date"
+                            value={field.value ? format(new Date(field.value), 'yyyy-MM-dd') : ''}
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "dd MMM yyyy")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date < new Date() || date > new Date("2050-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                   
+                  </FormItem>
+                )}
+              />
+               {initialData && <>
+              <Controller
+                control={form.control}
+                name="assignedToProfessional"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Assigned To</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                   
+                  </FormItem>
+                )}
+              />
+
+              <Controller
+                control={form.control}
+                name="assignedByProfessional"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Assigned By</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                  
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="assignedDateProfessional"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Assigned Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "dd MMM yyyy")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date < new Date() || date > new Date("2050-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage>{errors.assignedDate?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+              />
+
+<FormField
+                control={form.control}
+                name="completedDateProfessional"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Completed Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "dd MMM yyyy")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date < new Date() || date > new Date("2050-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                
+                  </FormItem>
+                )}
+              />
+
+<Controller
+                control={form.control}
+                name="professionalStatus"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Professional Task Status</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.Status?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+              />
+
+             
+
+              <Controller
+                control={form.control}
+                name="feedbackProfessional"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Professional Feedback</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                   
+                  </FormItem>
+                )}
+              />
+</>}
  </div>
           </div>
           <div className="space-y-4 ">
-          <h2 className="text-xl font-semibold "> For Approver</h2>
+          <h2 className="text-xl font-semibold  bg-orange-300"> For Approver</h2>
           <div className="w-full gap-8 md:grid md:grid-cols-2">
  <Controller
                 control={form.control}
@@ -709,7 +810,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                     <FormControl>
                       <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+                  
                   </FormItem>
                 )}
 />
@@ -722,7 +823,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
              <FormControl>
                 <Input {...field} disabled={isEnabled || loading} />
                 </FormControl>
-             <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+           
     </FormItem>
   )}
 />
@@ -735,17 +836,231 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                     <FormControl>
                       <Input {...field} disabled={isEnabled || loading} />
                     </FormControl>
-                    <FormMessage>{errors.taskType?.message?.toString()}</FormMessage>
+                  
                   </FormItem>
                 )}
 />
+<Controller
+                 control={form.control}
+                    name="annualIncomeApprover"
+                  render={({ field }) => (
+                <FormItem>
+                 <FormLabel>Annual Income</FormLabel>
+             <FormControl>
+                <Input {...field} disabled={isEnabled || loading} />
+                </FormControl>
+          
+    </FormItem>
+  )}
+/>
+<Controller
+                control={form.control}
+                name="maximumCostAssignedApprover"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Maximum Cost Assigned</FormLabel>
+                    <FormControl>
+                      <Input type="number" {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                  
+                  </FormItem>
+                )}
+              />
+
+<FormField
+                control={form.control}
+                name="dueDateApprover"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Due Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "dd MMM yyyy")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date < new Date() || date > new Date("2050-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  
+                  </FormItem>
+                )}
+              />
+            
+           
+
+            
+
+            {initialData && <>
+              <Controller
+                control={form.control}
+                name="assignedToApprover"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Assigned To</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                
+                  </FormItem>
+                )}
+              />
+
+              <Controller
+                control={form.control}
+                name="assignedByApprover"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Assigned By</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                 
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="assignedDateApprover"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Assigned Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "dd MMM yyyy")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date < new Date() || date > new Date("2050-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+               
+                  </FormItem>
+                )}
+              />
+
+<FormField
+                control={form.control}
+                name="completedDateApprover"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Completed Date</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "dd MMM yyyy")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={field.value}
+                          onSelect={field.onChange}
+                          disabled={(date) =>
+                            date < new Date() || date > new Date("2050-01-01")
+                          }
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  
+                  </FormItem>
+                )}
+              />
+           
+           <Controller
+                control={form.control}
+                name="approverStatus"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Approver Task Status</FormLabel>
+                    <FormControl>
+                      <Input {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+                    <FormMessage>{errors.Status?.message?.toString()}</FormMessage>
+                  </FormItem>
+                )}
+              />
+
+              <Controller
+                control={form.control}
+                name="feedbackApprover"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Approver Feedback</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} disabled={isEnabled || loading} />
+                    </FormControl>
+              
+                  </FormItem>
+                )}
+              />
+</>}
  </div>
  </div>
   
           </div>
            {/* Availability Criteria*/}
-          <div className="space-y-4 border border-gray-300 p-4 rounded-md">
-  <h2 className="text-xl font-semibold bg-gray-100">Availability Criteria</h2>
+          <div className="space-y-4 border border-orange-300 p-4 rounded-md">
+  <h2 className="text-xl font-semibold bg-orange-300">Availability Criteria</h2>
   <div className="w-full gap-8 md:grid md:grid-cols-2">
     <Controller
       control={form.control}
@@ -760,11 +1075,12 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
                 { value: '6-8am', label: '6-8 am' },
                 { value: '8-2pm', label: '8-2 pm' },
                 { value: '4-9pm', label: '4-9 pm' },
+                { value: 'All Day', label: 'All Day'}
               ]}
               isDisabled={isEnabled || loading}
             />
           </FormControl>
-          <FormMessage>{errors.timeAvailability?.message?.toString()}</FormMessage>
+        
         </FormItem>
       )}
     />
@@ -784,7 +1100,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
           isDisabled={isEnabled || loading}
         />
       </FormControl>
-      {/* <FormMessage>{errors.time?.message}</FormMessage> */}
+  
     </FormItem>
   )}
 /> 
@@ -804,7 +1120,7 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
               isDisabled={isEnabled || loading}
             />
           </FormControl>
-          <FormMessage>{errors.immediateAvailability?.message?.toString()}</FormMessage>
+     
         </FormItem>
       )}
     />
@@ -813,13 +1129,14 @@ export const CreateTask: React.FC<TaskManagementFormType> = ({ initialData, isEn
 
           {/* Form Actions */}
           <div className="flex justify-end">
-            <Button
+          { (!isEnabled)  && <Button
               type="submit"
               disabled={isEnabled || loading}
               className="ml-4 w-full"
             >
               {action}
             </Button>
+}
           </div>
         </form>
       </Form>

@@ -126,7 +126,7 @@ export const navItems: NavItem[] = [
   // },
   {
     title: 'User Management',
-    // href: '/user-management',
+    href: '/user-management',
     icon: 'user',
     label: 'User',
    subItems: [
@@ -157,24 +157,51 @@ export const navItems: NavItem[] = [
     icon: 'user',
     label: 'admin'
   },
+
   {
     title: 'Task Management',
-    href: '/task-management',
     icon: 'task',
-    label: 'task-management'
+    label: 'task-management',
+      subItems: [
+      {
+        title: 'Create Task',
+        href: '/task',
+        icon: 'accountStatement',
+        label: 'Create Task'
+      },
+      {
+        title: 'Professional Task',
+        href: '/task-management',
+        icon: 'invoiceSummary',
+        label: 'invoice-summary'
+      },
+      {
+        title: 'Approver Task',
+        href: '/task-management',
+        icon: 'salesReport',
+        label: 'sales-report'
+      },
+      {
+        title: 'Completed Task',
+        href: '/task-management',
+        icon: 'billSummary',
+        label: 'bill-summary'
+      },
+]
   },
+
   {
     title: 'Referral Management',
     href: '/referral',
     icon: 'order',
     label: 'create-Referral'
   },
-  // {
-  //   title: 'Customer Management',
-  //   href: '/user-management',
-  //   icon: 'management',
-  //   label: 'User Management'
-  // },
+  {
+    title: 'Finance Management',
+    href: '/finance-management',
+    icon: 'management',
+    label: 'Finance Management'
+  },
   // {
   //   title: 'Subscription/Order Management',
   //   href: '/order-management',
@@ -208,8 +235,6 @@ export const navItems: NavItem[] = [
   //   icon:  'manageSubscription',
   //   label: 'create-subscription'
   // },
- 
-
 
   {
     title: 'Complaint Management',
@@ -317,6 +342,12 @@ export const navItems: NavItem[] = [
       //   label: 'notification-settings'
       // },
       {
+        title: 'Permissions Settings',
+        href: '/permission-management',
+        icon: 'general',
+        label: 'general-settings'
+      },
+      {
         title: 'API Settings',
         href: '/settings-management/API',
         icon: 'api',
@@ -324,5 +355,7 @@ export const navItems: NavItem[] = [
       }
     ]
   },
+
+  
  
 ];

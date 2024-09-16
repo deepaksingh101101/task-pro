@@ -63,7 +63,7 @@ const TableRow = React.forwardRef<HTMLTableRowElement, TableRowProps>(
         style={{ borderBottomWidth: "0px" }}
         className={cn(
           'border-b-0 transition-colors  data-[state=selected]:bg-muted',
-          isHighlighted ? 'bg-green-200' : '', // Apply green background if highlighted
+          isHighlighted ? 'bg-green-300' : '', // Apply green background if highlighted
           className
         )}
         {...props}

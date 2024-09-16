@@ -9,13 +9,13 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { UserManagement } from '@/constants/user-management-data';
+import { ApproverManagement } from '@/constants/approver-management-data';
 import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: UserManagement;
+  data: ApproverManagement;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -27,21 +27,17 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     //  confirm logic here
   };
 
-  const handleRegisterNewUser = () => {
-    router.push('/user-management/register'); 
-  };
+  
 
   const handleEditUser = () => {
-    router.push(`/user-management/edit/${data}`); 
+    router.push(`/user/edit/${data.userId}`); 
   };
 
   const handleViewUser = () => {
-    router.push(`/user-management/view/${data}`); 
+    router.push(`/user/view/${data.userId}`); 
   };
 
-  const handleAssignEmployee = () => {
-    router.push(`/user-management/assign/${data}`); 
-  };
+  
 
   return (
     <>

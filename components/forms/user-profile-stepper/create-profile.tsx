@@ -33,7 +33,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 
 interface ProfileFormType {
   initialData: any | null;
-  categories: any;
+  categories?: any;
+  isEnabled?: boolean;
+
 }
 
 const FormSchema = z.object({
@@ -41,6 +43,7 @@ const FormSchema = z.object({
   firstName: z.string().min(1, "First Name is required"),
   lastName: z.string().min(1, "Last Name is required"),
   contact: z.string().min(1, "Contact is required"),
+  email: z.string().min(1, "Email is required"),
   address: z.string().min(1, "Address is required"),
   roleAssignmentDate: z.string().min(1, "Role Assignment Date is required"),
   verificationStatus: z.string().min(1, "Verification Status is required"),
@@ -52,22 +55,36 @@ const FormSchema = z.object({
 
 export const CreateProfileOne: React.FC<ProfileFormType> = ({
   initialData,
+  isEnabled,
   categories,
 }) => {
   const params = useParams();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const title = initialData ? "Edit User" : "Create User";
-  const description = initialData
-    ? "Edit the user profile."
+  const title = initialData && isEnabled ? "View User" : initialData ? "Edit User" : "Create User";
+  const description = initialData && isEnabled 
+    ? "View the user profile." : initialData ? "Edit the user profile."
     : "To create a new user, we first need some basic information.";
-  const toastMessage = initialData ? "User updated." : "User created.";
+  const textMessage = initialData ? "User updated." : "User created.";
   const action = initialData ? "Save changes" : "Create";
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    mode: "onChange",
+    mode: 'onChange',
+    defaultValues: initialData || {
+      userId: '',               
+      firstName: '',            
+      lastName: '', 
+      email: '',           
+      contact: '',            
+      address: '',             
+      roleAssignmentDate: '',  
+      verificationStatus: '',  
+      lastLogin: '',           
+      rewardsPoints: 0,        
+      accountStatus: '',       
+    },
   });
 
   const {
@@ -155,7 +172,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
         <Heading title={title} description={description} />
         {initialData && (
           <Button
-            disabled={loading}
+            disabled={isEnabled || loading}
             variant="destructive"
             size="sm"
             onClick={() => setOpen(true)}
@@ -217,19 +234,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
           className="w-full space-y-8"
         >
           <div className="relative mb-4 gap-8 rounded-md border p-4 md:grid md:grid-cols-3">
-            <FormField
-              control={form.control}
-              name="userId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>User ID</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="Enter User ID" {...field} />
-                  </FormControl>
-                  <FormMessage>{errors.userId?.message}</FormMessage>
-                </FormItem>
-              )}
-            />
+          
             <FormField
               control={form.control}
               name="firstName"
@@ -237,7 +242,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="John" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="Ridhi" {...field} />
                   </FormControl>
                   <FormMessage>{errors.firstName?.message}</FormMessage>
                 </FormItem>
@@ -250,7 +255,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="Doe" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="Mishra" {...field} />
                   </FormControl>
                   <FormMessage>{errors.lastName?.message}</FormMessage>
                 </FormItem>
@@ -263,7 +268,20 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>Contact</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="123-456-7890" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="123-456-7890" {...field} />
+                  </FormControl>
+                  <FormMessage>{errors.contact?.message}</FormMessage>
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input disabled={isEnabled || loading} placeholder="abc@gmail.com" {...field} />
                   </FormControl>
                   <FormMessage>{errors.contact?.message}</FormMessage>
                 </FormItem>
@@ -276,7 +294,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                 <FormItem>
                   <FormLabel>Address</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="123 Main St" {...field} />
+                    <Input disabled={isEnabled || loading} placeholder="123 Main St" {...field} />
                   </FormControl>
                   <FormMessage>{errors.address?.message}</FormMessage>
                 </FormItem>
@@ -292,7 +310,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Input
-                          disabled={loading}
+                          disabled={isEnabled || loading}
                           placeholder="Select Date"
                           value={field.value ? format(new Date(field.value), 'yyyy-MM-dd') : ''}
                         />
@@ -329,7 +347,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                   <Select
                     value={field.value}
                     onValueChange={(value) => field.onChange(value)}
-                    disabled={loading}
+                    disabled={isEnabled || loading}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Verification Status" />
@@ -354,7 +372,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Input
-                          disabled={loading}
+                          disabled={isEnabled || loading}
                           placeholder="Select Date"
                           value={field.value ? format(new Date(field.value), 'yyyy-MM-dd') : ''}
                         />
@@ -391,7 +409,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                   <Select
                     value={field.value}
                     onValueChange={(value) => field.onChange(value)}
-                    disabled={loading}
+                    disabled={isEnabled || loading}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Activity Status" />
@@ -414,7 +432,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                   <FormControl>
                     <Input
                       type="number"
-                      disabled={loading}
+                      disabled={isEnabled || loading}
                       placeholder="0"
                       {...field}
                     />
@@ -432,7 +450,7 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
                   <Select
                     value={field.value}
                     onValueChange={(value) => field.onChange(value)}
-                    disabled={loading}
+                    disabled={isEnabled || loading}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select Account Status" />
@@ -449,14 +467,14 @@ export const CreateProfileOne: React.FC<ProfileFormType> = ({
             />
           </div>
 
-          <Button
-            disabled={loading}
+         {( !isEnabled) && <Button
+            disabled={isEnabled || loading}
             type="submit"
             className="w-full"
             onClick={() => form.handleSubmit(onSubmit)()}
           >
             {action}
-          </Button>
+          </Button>}
         </form>
       </Form>
     </>

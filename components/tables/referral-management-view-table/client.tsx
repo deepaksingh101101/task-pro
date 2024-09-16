@@ -36,11 +36,7 @@ export const ReferralManagementViewClient: React.FC = () => {
   };
 
   const filters = [
-    {
-      label: 'Referred Status',
-      subOptions: ['Subscription Purchased', 'Not Purchased'],
-    },
-    {
+   {
       label: 'Coupon Status',
       subOptions: ['Used', 'Unused'],
     },

@@ -126,8 +126,8 @@ export const columns: ColumnDef<ReferralManagementView>[] = [
       <div 
         style={{ borderRadius: "20px" }}
         className={`flex items-center justify-center px-2 py-1 ${
-          row.original.referredStatus === 'Subscription Purchased' ? 'bg-orange-400' :
-          row.original.referredStatus === 'Not Purchased' ? 'bg-red-400' :
+          row.original.referredStatus === 'Registered' ? 'bg-orange-400' :
+          row.original.referredStatus === 'Not Registered' ? 'bg-red-400' :
           'bg-red-400'
         }`}
       >

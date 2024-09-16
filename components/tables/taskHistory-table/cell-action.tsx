@@ -9,13 +9,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { ProfessionalManagement } from '@/constants/professional-management-data';
-import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck } from 'lucide-react';
+import { TaskHistory } from '@/constants/task-history-data';
+
+import { Edit, MoreHorizontal, Trash, Eye, UserPlus, UserCheck, Table } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface CellActionProps {
-  data: ProfessionalManagement;
+  data: TaskHistory;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -24,21 +25,30 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
 
   const onConfirm = async () => {
-    //  confirm logic here
+    // Your confirm logic here
+  };
+
+  const editTask = () => {
+    router.push(`/task/edit/${data.taskId}`); 
+  };
+
+  const viewTask = () => {
+    router.push(`/task/view/${data.taskId}`); 
+  };
+
+  const updateStatus = () => {
+    router.push(`/order/${data.taskId}`); 
+  };
+
+  const viewBids= () => {
+    router.push(`/bidding/table/${data.taskId}`); 
+  };
+
+  const biddingTable = () => {
+    router.push(`/bidding/table/${data.taskId}`); 
   };
 
  
-
-  const handleEditUser = () => {
-    router.push(`/user/edit/${data.userId}`); 
-  };
-
-  const handleViewUser = () => {
-    router.push(`/user/view/${data.userId}`); 
-  };
-
-  
-
   return (
     <>
       <AlertModal
@@ -56,19 +66,23 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
+          <DropdownMenuItem onClick={editTask}>
+            <Edit className="mr-2 h-4 w-4" />  Edit task
 
-         
-          <DropdownMenuItem onClick={handleEditUser}>
-            <Edit className="mr-2 h-4 w-4" /> Edit User Details
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleViewUser}>
-            <Eye className="mr-2 h-4 w-4" /> View User
+          <DropdownMenuItem onClick={viewTask}>
+            <Eye className="mr-2 h-4 w-4" /> View Task
           </DropdownMenuItem>
-          {/* <DropdownMenuItem onClick={handleAssignEmployee}>
-            <UserCheck className="mr-2 h-4 w-4" /> Assign Employee
+          {/* <DropdownMenuItem onClick={updateStatus}>
+            <UserCheck className="mr-2 h-4 w-4" /> Change Status
+
           </DropdownMenuItem> */}
-          <DropdownMenuItem onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" /> Deactivate User
+          <DropdownMenuItem onClick={viewBids}>
+            <Eye className="mr-2 h-4 w-4" /> View Bids
+
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={biddingTable}>                               
+            <Table className="mr-2 h-4 w-4" /> Biding Table
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
