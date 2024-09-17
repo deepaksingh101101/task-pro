@@ -2,7 +2,6 @@ import BreadCrumb from '@/components/breadcrumb';
 import { ComplaintForm } from '@/components/forms/complaint-stepper/create-complaint';
 import MainLayout from '@/components/layout/main-layout';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ComplaintManagementData } from '@/constants/complaint-management-data';
 
 const breadcrumbItems = [{ title: 'Complaint', link: '/dashboard/complaint' }];
 export default function page() {
