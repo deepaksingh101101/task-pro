@@ -9,13 +9,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Bag } from '@/constants/bag-data';
 import { Edit, MoreHorizontal, Trash, Eye } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 interface BagCellActionProps {
-  data: Bag;
+  data: any;
 }
 
 export const BagCellAction: React.FC<BagCellActionProps> = ({ data }) => {

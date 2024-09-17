@@ -1,9 +1,8 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { Bag } from '@/constants/bag-data';
 import { BagCellAction } from './cell-action';
 import Image from 'next/image';
 
-export const columns: ColumnDef<Bag>[] = [
+export const columns: ColumnDef<any>[] = [
   {
     accessorKey: 'bagName',
     header: 'Bag Name',
@@ -32,7 +31,7 @@ export const columns: ColumnDef<Bag>[] = [
             <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Maximum Units</th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        {/* <tbody className="bg-white divide-y divide-gray-200">
           {row.original.bagItems.map((item, index) => (
             <tr key={index} className={index % 2 === 0 ? 'bg-blue-100' : 'bg-blue-200'}>
               <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">{item.itemName}</td>
@@ -42,7 +41,7 @@ export const columns: ColumnDef<Bag>[] = [
               <td className="px-4 py-2 whitespace-nowrap text-sm text-gray-900">{item.maximumQuantity ?? '-'}</td>
             </tr>
           ))}
-        </tbody>
+        </tbody> */}
       </table>
     ),
   },
