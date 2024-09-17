@@ -1,7 +1,5 @@
 export interface ViewHistory {
-    taskId: any;
-    taskId: any;
-   
+    taskId?: any;   
     sno: number;
     amount: number;
     type: 'withdraw' | 'deposit';  
